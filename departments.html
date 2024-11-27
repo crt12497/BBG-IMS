@@ -1,83 +1,84 @@
-!DOCTYPE html
-html lang=en
-head
-  meta charset=UTF-8
-  meta name=viewport content=width=device-width, initial-scale=1.0
-  titleManage Departmentstitle
-  style
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <title>Manage Departments</title>
+  <style>
     body {
-      font-family Arial, sans-serif;
-      margin 0;
-      padding 20px;
-      background-color #f9f9f9;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f9f9f9;
     }
     h1 {
-      text-align center;
-      margin-bottom 20px;
+      text-align: center;
+      margin-bottom: 20px;
     }
     form {
-      background #fff;
-      padding 20px;
-      border-radius 8px;
-      box-shadow 0 4px 6px rgba(0, 0, 0, 0.1);
-      max-width 400px;
-      margin auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      max-width: 400px;
+      margin: auto;
     }
     label {
-      display block;
-      margin-bottom 8px;
-      font-weight bold;
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
     }
     input {
-      width 100%;
-      padding 10px;
-      margin-bottom 15px;
-      border 1px solid #ccc;
-      border-radius 5px;
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
     }
     button {
-      width 100%;
-      padding 10px;
-      background-color #007bff;
-      color white;
-      border none;
-      border-radius 5px;
-      cursor pointer;
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
     }
-    buttonhover {
-      background-color #0056b3;
+    button:hover {
+      background-color: #0056b3;
     }
     .back-link {
-      display block;
-      text-align center;
-      margin-top 20px;
-      color #007bff;
-      text-decoration none;
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      color: #007bff;
+      text-decoration: none;
     }
-    .back-linkhover {
-      text-decoration underline;
+    .back-link:hover {
+      text-decoration: underline;
     }
-  style
-head
-body
-  h1Manage Departmentsh1
-  form id=departmentForm
-    label for=departmentNameDepartment Namelabel
-    input type=text id=departmentName placeholder=Enter department name required
+  </style>
+</head>
+<body>
+  <h1>Manage Departments</h1>
+  <form id="departmentForm">
+    <label for="departmentName">Department Name</label>
+    <input type="text" id="departmentName" placeholder="Enter department name" required>
 
-    label for=departmentDescriptionDescriptionlabel
-    input type=text id=departmentDescription placeholder=Enter department description
+    <label for="departmentDescription">Description</label>
+    <input type="text" id="departmentDescription" placeholder="Enter department description">
 
-    button type=submitCreate Departmentbutton
-  form
-  a href=admin_panel.html class=back-linkBack to Admin Panela
+    <button type="submit">Create Department</button>
+  </form>
+  <a href="admin-panel.html" class="back-link">Back to Admin Panel</a>
 
-  script
+  <script>
     const departmentForm = document.getElementById('departmentForm');
     departmentForm.addEventListener('submit', function(e) {
       e.preventDefault();
       alert('Department created successfully!');
     });
-  script
-body
-html
+  </script>
+</body>
+</html>
