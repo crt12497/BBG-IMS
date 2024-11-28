@@ -77,14 +77,28 @@
       <input type="password" id="adminPassword" placeholder="Enter your password" required>
       
       <button type="submit">Login</button>
+      <p class="error" id="error">Invalid username or password</p>
     </form>
-    <a href="forgot-password.html" class="forgot-password">Forgot Password?</a>
+    <a href="forgot_password.html" class="forgot-password">Forgot Password?</a>
   </div>
-  <script>
-    const adminLoginForm = document.getElementById('adminLoginForm');
-    adminLoginForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      alert('Admin login submitted!');
+ <script>
+    const loginForm = document.getElementById('loginForm');
+    const errorElement = document.getElementById('error');
+
+    loginForm.addEventListener('submit', function(e) {
+      e.preventDefault(); // Prevent form from submitting
+
+      // Get input values
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+
+      // Check credentials
+      if (username === 'admin' && password === 'admin') {
+        alert('Login successful!');
+        window.location.href = 'admin_panel.html'; // Redirect to admin panel
+      } else {
+        errorElement.style.display = 'block'; // Show error message
+      }
     });
   </script>
 </body>
