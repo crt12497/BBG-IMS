@@ -78,13 +78,26 @@
       
       <button type="submit">Login</button>
     </form>
-    <a href="forgot-password.html" class="forgot-password">Forgot Password?</a>
+    <a href="forgot_password.html" class="forgot-password">Forgot Password?</a>
   </div>
-  <script>
-    const userLoginForm = document.getElementById('userLoginForm');
-    userLoginForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      alert('User login submitted!');
+ <script>
+    const loginForm = document.getElementById('userLoginForm');
+    const errorElement = document.getElementById('error');
+
+    loginForm.addEventListener('submit', function(e) {
+      e.preventDefault(); // Prevent form from submitting
+
+      // Get input values
+      const username = document.getElementById('userUsername').value;
+      const password = document.getElementById('userPassword').value;
+
+      // Check credentials
+      if (username === 'user' && password === 'user') {
+        alert('Login successful!');
+        window.location.href = 'user_panel.html'; // Redirect to admin panel
+      } else {
+        errorElement.style.display = 'block'; // Show error message
+      }
     });
   </script>
 </body>
