@@ -82,15 +82,15 @@
     <a href="forgot_password.html" class="forgot-password">Forgot Password?</a>
   </div>
  <script>
-    const loginForm = document.getElementById('loginForm');
+    const loginForm = document.getElementById('adminLoginForm');
     const errorElement = document.getElementById('error');
 
     loginForm.addEventListener('submit', function(e) {
       e.preventDefault(); // Prevent form from submitting
 
       // Get input values
-      const username = document.getElementById('username').value;
-      const password = document.getElementById('password').value;
+      const username = document.getElementById('adminUsername').value;
+      const password = document.getElementById('adminPassword').value;
 
       // Check credentials
       if (username === 'admin' && password === 'admin') {
