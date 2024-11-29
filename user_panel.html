@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Invoice Management</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: url('bg.png') no-repeat center center fixed;
+      background-size: cover;
+      color: #333;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #007bff;
+    }
+    form {
+      margin-bottom: 20px;
+    }
+    form label {
+      display: block;
+      margin: 10px 0 5px;
+      font-weight: bold;
+    }
+    form input, form textarea, form select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    form input[type="submit"] {
+      width: auto;
+      background: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    form input[type="submit"]:hover {
+      background: #0056b3;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    table th, table td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: left;
+    }
+    table th {
+      background: #007bff;
+      color: white;
+    }
+    table tr:nth-child(even) {
+      background: #f2f2f2;
+    }
+    table tr:hover {
+      background: #ddd;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>User Invoice Management</h1>
+    
+    <!-- Form to Submit New Invoices -->
+    <form id="invoiceForm">
+      <label for="vendorName">Vendor Name (Alpha-Numeric)</label>
+      <input type="text" id="vendorName" name="vendorName" placeholder="Enter Vendor Name" required>
+
+      <label for="invoiceNo">Invoice No (Alpha-Numeric)</label>
+      <input type="text" id="invoiceNo" name="invoiceNo" placeholder="Enter Invoice No" required>
+
+      <label for="invoiceDate">Invoice Date</label>
+      <input type="date" id="invoiceDate" name="invoiceDate" required>
+
+      <label for="description">Description</label>
+      <textarea id="description" name="description" rows="4" placeholder="Enter Description" required></textarea>
+
+      <label for="invoiceTotal">Invoice Total Amount</label>
+      <input type="number" id="invoiceTotal" name="invoiceTotal" placeholder="Enter Total Amount" required>
+
+      <label for="submittedDate">Submitted Date</label>
+      <input type="date" id="submittedDate" name="submittedDate" value="" required>
+
+      <label for="submittedTo">Submitted To</label>
+      <select id="submittedTo" name="submittedTo" required>
+        <option value="" disabled selected>Select Accounts User</option>
+        <option value="user1">Accounts User 1</option>
+        <option value="user2">Accounts User 2</option>
+        <option value="user3">Accounts User 3</option>
+      </select>
+
+      <label for="remarks">Remarks</label>
+      <textarea id="remarks" name="remarks" rows="3" placeholder="Enter Remarks (Optional)"></textarea>
+
+      <input type="submit" value="Submit Invoice">
+    </form>
+
+    <!-- Table to View Submitted Invoices -->
+    <h2>Submitted Invoices</h2>
+    <table id="invoiceTable">
+      <thead>
+        <tr>
+          <th>Vendor Name</th>
+          <th>Invoice No</th>
+          <th>Invoice Date</th>
+          <th>Description</th>
+          <th>Total Amount</th>
+          <th>Submitted Date</th>
+          <th>Submitted To</th>
+          <th>Remarks</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Dynamically populated rows will go here -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    // Pre-fill Submitted Date with Current Date
+    document.getElementById('submittedDate').value = new Date().toISOString().slice(0, 10);
+
+    // Handle Invoice Submission
+    document.getElementById('invoiceForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      // Collect form data
+      const formData = {
+        vendorName: document.getElementById('vendorName').value,
+        invoiceNo: document.getElementById('invoiceNo').value,
+        invoiceDate: document.getElementById('invoiceDate').value,
+        description: document.getElementById('description').value,
+        invoiceTotal: document.getElementById('invoiceTotal').value,
+        submittedDate: document.getElementById('submittedDate').value,
+        submittedTo: document.getElementById('submittedTo').value,
+        remarks: document.getElementById('remarks').value
+      };
+
+      // Add data to the table
+      const table = document.getElementById('invoiceTable').getElementsByTagName('tbody')[0];
+      const newRow = table.insertRow();
+      Object.values(formData).forEach(value => {
+        const cell = newRow.insertCell();
+        cell.textContent = value;
+      });
+
+      // Reset the form
+      document.getElementById('invoiceForm').reset();
+      document.getElementById('submittedDate').value = new Date().toISOString().slice(0, 10);
+    });
+  </script>
+</body>
+</html>
