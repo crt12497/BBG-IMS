@@ -106,7 +106,7 @@
   <div class="container">
     <!-- Header -->
     <div class="header">
-      <img src="logo.png" alt="Company Logo">
+      <img src="logo.png" alt="BBG">
       <div class="header-buttons">
         <button id="logoutButton">Logout</button>
         <button id="showFormButton">Submit Invoice</button>
@@ -162,6 +162,8 @@
           <th>Submitted Date</th>
           <th>Submitted To</th>
           <th>Remarks</th>
+          <th>Payment Status</th>
+          <th>Payment Completed Date</th>
         </tr>
       </thead>
       <tbody>
@@ -220,9 +222,8 @@
 
     // Logout functionality
     document.getElementById('logoutButton').addEventListener('click', () => {
-      // Placeholder for logout logic
-      alert('Logged out!');
-      // Redirect to login page or perform necessary logout actions
+      // Redirect to the login page
+      window.location.href = 'user_login.html';
     });
   </script>
 </body>
