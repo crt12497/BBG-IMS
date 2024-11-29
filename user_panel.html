@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>User Invoice Management</title>
+  <title>Invoice Management</title>
   <link rel="icon" type="image/x-icon" href="logo.png">
   <style>
     body {
@@ -89,6 +89,10 @@
     table th {
       background: #007bff;
       color: white;
+      cursor: pointer;
+    }
+    table th.sortable:hover {
+      background: #0056b3;
     }
     table tr:nth-child(even) {
       background: #f2f2f2;
@@ -96,20 +100,27 @@
     table tr:hover {
       background: #ddd;
     }
+    .filter-input {
+      margin-bottom: 10px;
+      padding: 10px;
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <!-- Header with Logo and Buttons -->
+    <!-- Header -->
     <div class="header">
-      <img src="logo.png" alt="BBG">
+      <img src="company-logo.png" alt="Company Logo">
       <div class="header-buttons">
         <button id="logoutButton">Logout</button>
         <button id="showFormButton">Submit Invoice</button>
       </div>
     </div>
 
-    <h1>Invoice Register</h1>
+    <h1>Invoice Management</h1>
 
     <!-- Form to Submit New Invoices -->
     <form id="invoiceForm">
@@ -145,90 +156,96 @@
       <input type="submit" id="submit" value="Submit Invoice">
     </form>
 
-    <!-- Table to View Submitted Invoices -->
-    <h2>Submitted Invoices</h2>
+    <!-- Filters -->
+    <input type="text" id="filterInput" class="filter-input" placeholder="Filter by any field...">
+
+    <!-- Table -->
     <table id="invoiceTable">
       <thead>
         <tr>
-          <th>Vendor Name</th>
-          <th>Invoice No</th>
-          <th>Invoice Date</th>
-          <th>Description</th>
-          <th>Total Amount</th>
-          <th>Submitted Date</th>
-          <th>Submitted To</th>
+          <th class="sortable">ID</th>
+          <th class="sortable">Vendor Name</th>
+          <th class="sortable">Invoice No</th>
+          <th class="sortable">Invoice Date</th>
+          <th class="sortable">Description</th>
+          <th class="sortable">Total Amount</th>
+          <th class="sortable">Submitted Date</th>
+          <th class="sortable">Submitted To</th>
           <th>Remarks</th>
+          <th>Payment Status</th>
+          <th>Paid Date</th>
         </tr>
       </thead>
       <tbody>
-        <!-- Sample data -->
-        <tr>
-          <td>ABC Pvt Ltd</td>
-          <td>INV123</td>
-          <td>2024-11-15</td>
-          <td>Office Supplies</td>
-          <td>5000</td>
-          <td>2024-11-16</td>
-          <td>Accounts User 1</td>
-          <td>Urgent</td>
-        </tr>
+        <!-- Dynamically populated rows -->
       </tbody>
     </table>
   </div>
 
   <script>
+    let invoiceIdCounter = 1; // Initialize ID counter
+    const invoiceTable = document.getElementById('invoiceTable').getElementsByTagName('tbody')[0];
+
     // Pre-fill Submitted Date with Current Date
     document.getElementById('submittedDate').value = new Date().toISOString().slice(0, 10);
 
-    // Toggle the visibility of the form
-    const showFormButton = document.getElementById('showFormButton');
-    const invoiceForm = document.getElementById('invoiceForm');
-
-    showFormButton.addEventListener('click', () => {
-      if (invoiceForm.style.display === 'none' || invoiceForm.style.display === '') {
-        invoiceForm.style.display = 'block';
-        showFormButton.textContent = 'Hide Form';
-      } else {
-        invoiceForm.style.display = 'none';
-        showFormButton.textContent = 'Submit Invoice';
-      }
+    // Toggle form visibility
+    document.getElementById('showFormButton').addEventListener('click', () => {
+      const form = document.getElementById('invoiceForm');
+      form.style.display = form.style.display === 'block' ? 'none' : 'block';
     });
 
-    // Handle Logout
-    document.getElementById('logoutButton').addEventListener('click', () => {
-      alert('Logging out...');
-      window.location.href = 'login.html'; // Redirect to login page
-    });
-
-    // Handle Invoice Submission
-    document.getElementById('invoiceForm').addEventListener('submit', function(e) {
+    // Handle invoice submission
+    document.getElementById('invoiceForm').addEventListener('submit', (e) => {
       e.preventDefault();
 
       // Collect form data
-      const formData = {
-        vendorName: document.getElementById('vendorName').value,
-        invoiceNo: document.getElementById('invoiceNo').value,
-        invoiceDate: document.getElementById('invoiceDate').value,
-        description: document.getElementById('description').value,
-        invoiceTotal: document.getElementById('invoiceTotal').value,
-        submittedDate: document.getElementById('submittedDate').value,
-        submittedTo: document.getElementById('submittedTo').value,
-        remarks: document.getElementById('remarks').value
-      };
+      const newRow = invoiceTable.insertRow();
+      const formData = [
+        invoiceIdCounter++,
+        document.getElementById('vendorName').value,
+        document.getElementById('invoiceNo').value,
+        document.getElementById('invoiceDate').value,
+        document.getElementById('description').value,
+        document.getElementById('invoiceTotal').value,
+        document.getElementById('submittedDate').value,
+        document.getElementById('submittedTo').value,
+        document.getElementById('remarks').value,
+        'Pending', // Default payment status
+        '' // Default paid date
+      ];
 
-      // Add data to the table
-      const table = document.getElementById('invoiceTable').getElementsByTagName('tbody')[0];
-      const newRow = table.insertRow();
-      Object.values(formData).forEach(value => {
+      // Populate table row
+      formData.forEach((data) => {
         const cell = newRow.insertCell();
-        cell.textContent = value;
+        cell.textContent = data;
       });
 
-      // Reset the form and hide it
       document.getElementById('invoiceForm').reset();
       document.getElementById('submittedDate').value = new Date().toISOString().slice(0, 10);
-      invoiceForm.style.display = 'none';
-      showFormButton.textContent = 'Submit Invoice';
+    });
+
+    // Filter table
+    document.getElementById('filterInput').addEventListener('input', (e) => {
+      const filter = e.target.value.toLowerCase();
+      Array.from(invoiceTable.rows).forEach(row => {
+        row.style.display = Array.from(row.cells).some(cell => cell.textContent.toLowerCase().includes(filter)) ? '' : 'none';
+      });
+    });
+
+    // Sort table columns
+    document.querySelectorAll('.sortable').forEach((header, colIndex) => {
+      header.addEventListener('click', () => {
+        const rows = Array.from(invoiceTable.rows);
+        const ascending = header.dataset.ascending === 'true';
+        header.dataset.ascending = !ascending;
+        rows.sort((a, b) => {
+          const aText = a.cells[colIndex].textContent;
+          const bText = b.cells[colIndex].textContent;
+          return ascending ? aText.localeCompare(bText) : bText.localeCompare(aText);
+        });
+        rows.forEach(row => invoiceTable.appendChild(row));
+      });
     });
   </script>
 </body>
