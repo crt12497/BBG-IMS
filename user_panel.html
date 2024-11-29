@@ -76,6 +76,16 @@
     form input[type="submit"]:hover {
       background: #0056b3;
     }
+    form input[type="button"] {
+      width: auto;
+      background: #f44336; /* Red color for cancel */
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    form input[type="button"]:hover {
+      background: #d32f2f; /* Darker red for hover */
+    }
     table {
       width: 100%;
       border-collapse: collapse;
@@ -117,6 +127,15 @@
 
     <!-- Form to Submit New Invoices -->
     <form id="invoiceForm">
+      <label for="companyName">Company Name</label>
+      <select id="companyName" name="companyName" required>
+        <option value="" disabled selected>Select Company</option>
+        <option value="company1">Company 1</option>
+        <option value="company2">Company 2</option>
+        <option value="company3">Company 3</option>
+        <option value="company4">Company 4</option>
+      </select>
+
       <label for="vendorName">Vendor Name</label>
       <input type="text" id="vendorName" name="vendorName" placeholder="Enter Vendor Name" required>
 
@@ -147,6 +166,7 @@
       <textarea id="remarks" name="remarks" rows="3" placeholder="Enter Remarks (Optional)"></textarea>
 
       <input type="submit" id="submit" value="Submit Invoice">
+      <input type="button" id="cancel" value="Cancel">
     </form>
 
     <!-- Table -->
@@ -154,6 +174,7 @@
       <thead>
         <tr>
           <th>ID</th>
+          <th>Company Name</th>
           <th>Vendor Name</th>
           <th>Invoice No</th>
           <th>Invoice Date</th>
@@ -192,6 +213,7 @@
       // Collect form data
       const formData = {
         id: invoiceIdCounter++,
+        companyName: document.getElementById('companyName').value,
         vendorName: document.getElementById('vendorName').value,
         invoiceNo: document.getElementById('invoiceNo').value,
         invoiceDate: document.getElementById('invoiceDate').value,
@@ -201,7 +223,7 @@
         submittedTo: document.getElementById('submittedTo').value,
         remarks: document.getElementById('remarks').value,
         paymentStatus: 'Pending', // Default payment status
-        paidDate: '' // Default paid date
+        paymentCompletedDate: '' // Default payment completed date
       };
 
       // Add data to the table
@@ -220,10 +242,18 @@
       document.getElementById('invoiceForm').style.display = 'none';
     });
 
-    // Logout functionality
+    // Cancel functionality
+    document.getElementById('cancel').addEventListener('click', () => {
+      // Reset the form and hide it
+      document.getElementById('invoiceForm').reset();
+      document.getElementById('submittedDate').value = new Date().toISOString().slice(0, 10);
+      document.getElementById('invoiceForm').style.display = 'none';
+    });
+
+    // Handle Logout
     document.getElementById('logoutButton').addEventListener('click', () => {
-      // Redirect to the login page
-      window.location.href = 'user_login.html';
+      // Handle logout action (e.g., redirect to login page or reset session)
+      alert('Logged out');
     });
   </script>
 </body>
