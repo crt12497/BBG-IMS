@@ -106,7 +106,7 @@
   <div class="container">
     <!-- Header -->
     <div class="header">
-      <img src="logo.png" alt="BBG">
+      <img src="logo.png" alt="Company Logo">
       <div class="header-buttons">
         <button id="logoutButton">Logout</button>
         <button id="showFormButton">Submit Invoice</button>
@@ -171,47 +171,59 @@
   </div>
 
   <script>
-    // JavaScript code from above
-    // Toggle form visibility
-document.getElementById('showFormButton').addEventListener('click', () => {
-  const form = document.getElementById('invoiceForm');
-  form.style.display = form.style.display === 'block' ? 'none' : 'block';
-});
+    // Initialize variables
+    let invoiceIdCounter = 1;
 
-// Handle invoice submission
-document.getElementById('invoiceForm').addEventListener('submit', (e) => {
-  e.preventDefault();
+    // Pre-fill Submitted Date with Current Date
+    document.getElementById('submittedDate').value = new Date().toISOString().slice(0, 10);
 
-  // Collect form data
-  const newRow = invoiceTable.insertRow();
-  const formData = [
-    invoiceIdCounter++,
-    document.getElementById('vendorName').value,
-    document.getElementById('invoiceNo').value,
-    document.getElementById('invoiceDate').value,
-    document.getElementById('description').value,
-    document.getElementById('invoiceTotal').value,
-    document.getElementById('submittedDate').value,
-    document.getElementById('submittedTo').value,
-    document.getElementById('remarks').value,
-    'Pending', // Default payment status
-    '' // Default paid date
-  ];
+    // Handle the visibility of the form
+    document.getElementById('showFormButton').addEventListener('click', () => {
+      const form = document.getElementById('invoiceForm');
+      form.style.display = form.style.display === 'block' ? 'none' : 'block';
+    });
 
-  // Populate table row
-  formData.forEach((data) => {
-    const cell = newRow.insertCell();
-    cell.textContent = data;
-  });
+    // Handle Invoice Submission
+    document.getElementById('invoiceForm').addEventListener('submit', (e) => {
+      e.preventDefault();
 
-  // Reset the form
-  document.getElementById('invoiceForm').reset();
-  document.getElementById('submittedDate').value = new Date().toISOString().slice(0, 10);
+      // Collect form data
+      const formData = {
+        id: invoiceIdCounter++,
+        vendorName: document.getElementById('vendorName').value,
+        invoiceNo: document.getElementById('invoiceNo').value,
+        invoiceDate: document.getElementById('invoiceDate').value,
+        description: document.getElementById('description').value,
+        invoiceTotal: document.getElementById('invoiceTotal').value,
+        submittedDate: document.getElementById('submittedDate').value,
+        submittedTo: document.getElementById('submittedTo').value,
+        remarks: document.getElementById('remarks').value,
+        paymentStatus: 'Pending', // Default payment status
+        paidDate: '' // Default paid date
+      };
 
-  // Hide the form
-  document.getElementById('invoiceForm').style.display = 'none';
-});
+      // Add data to the table
+      const table = document.getElementById('invoiceTable').getElementsByTagName('tbody')[0];
+      const newRow = table.insertRow();
+      Object.values(formData).forEach(value => {
+        const cell = newRow.insertCell();
+        cell.textContent = value;
+      });
 
+      // Reset the form
+      document.getElementById('invoiceForm').reset();
+      document.getElementById('submittedDate').value = new Date().toISOString().slice(0, 10);
+
+      // Hide the form
+      document.getElementById('invoiceForm').style.display = 'none';
+    });
+
+    // Logout functionality
+    document.getElementById('logoutButton').addEventListener('click', () => {
+      // Placeholder for logout logic
+      alert('Logged out!');
+      // Redirect to login page or perform necessary logout actions
+    });
   </script>
 </body>
 </html>
