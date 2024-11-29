@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <title>BBG Vendors Management</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+      background: #f5f5f5 url('bg.png') no-repeat center center fixed;
+      background-size: cover;
+    }
+    header {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    header img {
+      height: 40px;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .card {
+      background-color: #f8f9fa;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .card h3 {
+      margin: 0 0 10px;
+    }
+    .card button {
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .card button:hover {
+      background: #0056b3;
+    }
+    footer {
+      text-align: center;
+      padding: 10px;
+      background-color: #007bff;
+      color: white;
+      position: absolute;
+      width: 100%;
+      bottom: 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    table, th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #007bff;
+      color: white;
+    }
+    .action-buttons {
+      display: flex;
+      gap: 10px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <img src="logo.png" alt="BBG Logo">
+      <h1>BBG Vendors Management</h1>
+    </div>
+    <a href="admin_login.html" style="color: white; text-decoration: none;">Logout</a>
+  </header>
+
+  <div class="container">
+    <h2>Manage Vendors</h2>
+    
+    <!-- Add Vendor Button -->
+    <div class="card">
+      <button onclick="window.location.href='add_vendor.html'">Add Vendor</button>
+    </div>
+
+    <!-- Vendors List Table -->
+    <div class="card">
+      <h3>List of Vendors</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Vendor Name</th>
+            <th>Contact</th>
+            <th>Address</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Vendor 1</td>
+            <td>+1234567890</td>
+            <td>123 Street, City</td>
+            <td class="action-buttons">
+              <button onclick="editVendor(1)">Edit</button>
+              <button onclick="removeVendor(1)">Remove</button>
+            </td>
+          </tr>
+          <tr>
+            <td>Vendor 2</td>
+            <td>+0987654321</td>
+            <td>456 Avenue, City</td>
+            <td class="action-buttons">
+              <button onclick="editVendor(2)">Edit</button>
+              <button onclick="removeVendor(2)">Remove</button>
+            </td>
+          </tr>
+          <!-- Additional Vendors will be listed here -->
+        </tbody>
+      </table>
+    </div>
+    
+    <!-- Home Button -->
+    <div class="card">
+      <button onclick="window.location.href='admin_panel.html'">Home</button>
+    </div>
+  </div>
+
+  <script>
+    // Function to handle vendor editing (redirects to an edit page)
+    function editVendor(vendorId) {
+      alert('Redirecting to edit page for vendor ' + vendorId);
+      // You can replace this alert with actual redirection to the vendor's edit page
+      window.location.href = 'edit_vendor.html?id=' + vendorId;
+    }
+
+    // Function to handle vendor removal
+    function removeVendor(vendorId) {
+      const confirmation = confirm('Are you sure you want to remove this vendor?');
+      if (confirmation) {
+        alert('Vendor ' + vendorId + ' removed successfully.');
+        // Here, you would normally call an API or backend function to remove the vendor from the database
+        location.reload(); // Refresh the page to reflect changes (can be replaced with actual dynamic removal)
+      }
+    }
+  </script>
+</body>
+</html>
