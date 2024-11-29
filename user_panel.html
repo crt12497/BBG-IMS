@@ -51,7 +51,7 @@
       color: #007bff;
     }
     #invoiceForm {
-      display: none;
+      display: none; /* Hide the form initially */
       margin-bottom: 20px;
     }
     form label {
@@ -99,13 +99,6 @@
     }
     table tr:hover {
       background: #ddd;
-    }
-    .filter-input {
-      margin-bottom: 10px;
-      padding: 10px;
-      width: 100%;
-      border: 1px solid #ccc;
-      border-radius: 5px;
     }
   </style>
 </head>
@@ -156,24 +149,19 @@
       <input type="submit" id="submit" value="Submit Invoice">
     </form>
 
-    <!-- Filters -->
-    <input type="text" id="filterInput" class="filter-input" placeholder="Filter by any field...">
-
     <!-- Table -->
     <table id="invoiceTable">
       <thead>
         <tr>
-          <th class="sortable">ID</th>
-          <th class="sortable">Vendor Name</th>
-          <th class="sortable">Invoice No</th>
-          <th class="sortable">Invoice Date</th>
-          <th class="sortable">Description</th>
-          <th class="sortable">Total Amount</th>
-          <th class="sortable">Submitted Date</th>
-          <th class="sortable">Submitted To</th>
+          <th>ID</th>
+          <th>Vendor Name</th>
+          <th>Invoice No</th>
+          <th>Invoice Date</th>
+          <th>Description</th>
+          <th>Total Amount</th>
+          <th>Submitted Date</th>
+          <th>Submitted To</th>
           <th>Remarks</th>
-          <th>Payment Status</th>
-          <th>Paid Date</th>
         </tr>
       </thead>
       <tbody>
@@ -183,70 +171,47 @@
   </div>
 
   <script>
-    let invoiceIdCounter = 1; // Initialize ID counter
-    const invoiceTable = document.getElementById('invoiceTable').getElementsByTagName('tbody')[0];
-
-    // Pre-fill Submitted Date with Current Date
-    document.getElementById('submittedDate').value = new Date().toISOString().slice(0, 10);
-
+    // JavaScript code from above
     // Toggle form visibility
-    document.getElementById('showFormButton').addEventListener('click', () => {
-      const form = document.getElementById('invoiceForm');
-      form.style.display = form.style.display === 'block' ? 'none' : 'block';
-    });
+document.getElementById('showFormButton').addEventListener('click', () => {
+  const form = document.getElementById('invoiceForm');
+  form.style.display = form.style.display === 'block' ? 'none' : 'block';
+});
 
-    // Handle invoice submission
-    document.getElementById('invoiceForm').addEventListener('submit', (e) => {
-      e.preventDefault();
+// Handle invoice submission
+document.getElementById('invoiceForm').addEventListener('submit', (e) => {
+  e.preventDefault();
 
-      // Collect form data
-      const newRow = invoiceTable.insertRow();
-      const formData = [
-        invoiceIdCounter++,
-        document.getElementById('vendorName').value,
-        document.getElementById('invoiceNo').value,
-        document.getElementById('invoiceDate').value,
-        document.getElementById('description').value,
-        document.getElementById('invoiceTotal').value,
-        document.getElementById('submittedDate').value,
-        document.getElementById('submittedTo').value,
-        document.getElementById('remarks').value,
-        'Pending', // Default payment status
-        '' // Default paid date
-      ];
+  // Collect form data
+  const newRow = invoiceTable.insertRow();
+  const formData = [
+    invoiceIdCounter++,
+    document.getElementById('vendorName').value,
+    document.getElementById('invoiceNo').value,
+    document.getElementById('invoiceDate').value,
+    document.getElementById('description').value,
+    document.getElementById('invoiceTotal').value,
+    document.getElementById('submittedDate').value,
+    document.getElementById('submittedTo').value,
+    document.getElementById('remarks').value,
+    'Pending', // Default payment status
+    '' // Default paid date
+  ];
 
-      // Populate table row
-      formData.forEach((data) => {
-        const cell = newRow.insertCell();
-        cell.textContent = data;
-      });
+  // Populate table row
+  formData.forEach((data) => {
+    const cell = newRow.insertCell();
+    cell.textContent = data;
+  });
 
-      document.getElementById('invoiceForm').reset();
-      document.getElementById('submittedDate').value = new Date().toISOString().slice(0, 10);
-    });
+  // Reset the form
+  document.getElementById('invoiceForm').reset();
+  document.getElementById('submittedDate').value = new Date().toISOString().slice(0, 10);
 
-    // Filter table
-    document.getElementById('filterInput').addEventListener('input', (e) => {
-      const filter = e.target.value.toLowerCase();
-      Array.from(invoiceTable.rows).forEach(row => {
-        row.style.display = Array.from(row.cells).some(cell => cell.textContent.toLowerCase().includes(filter)) ? '' : 'none';
-      });
-    });
+  // Hide the form
+  document.getElementById('invoiceForm').style.display = 'none';
+});
 
-    // Sort table columns
-    document.querySelectorAll('.sortable').forEach((header, colIndex) => {
-      header.addEventListener('click', () => {
-        const rows = Array.from(invoiceTable.rows);
-        const ascending = header.dataset.ascending === 'true';
-        header.dataset.ascending = !ascending;
-        rows.sort((a, b) => {
-          const aText = a.cells[colIndex].textContent;
-          const bText = b.cells[colIndex].textContent;
-          return ascending ? aText.localeCompare(bText) : bText.localeCompare(aText);
-        });
-        rows.forEach(row => invoiceTable.appendChild(row));
-      });
-    });
   </script>
 </body>
 </html>
