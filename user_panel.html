@@ -119,6 +119,7 @@
       <img src="logo.png" alt="BBG">
       <div class="header-buttons">
         <button id="logoutButton">Logout</button>
+        <button id="profileButton">My Profile</button>
         <button id="showFormButton">Submit Invoice</button>
       </div>
     </div>
@@ -194,6 +195,11 @@
   </div>
 
   <script>
+
+    document.getElementById('profileButton').addEventListener('click', () => {
+    // Redirect to the user panel page (Profile Page)
+    window.location.href = 'user_profile.html';
+  });
     // Initialize variables
     let invoiceIdCounter = 1;
 
