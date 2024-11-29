@@ -111,6 +111,8 @@
       <img src="pp.jpg" alt="Profile Photo" id="profilePhoto">
       <button id="changePhotoButton">Change Photo</button>
       <button id="removePhotoButton">Remove Photo</button>
+      <!-- Hidden file input for selecting new photo -->
+      <input type="file" id="fileInput" accept="image/*" style="display: none;">
     </div>
 
     <!-- Profile Information -->
@@ -133,7 +135,7 @@
       </div>
     </div>
 
-    <!-- Table of Invoices (optional placeholder for now) -->
+  </div>
 
   <script>
     // Logout functionality
@@ -148,14 +150,24 @@
 
     // Change Profile Photo
     document.getElementById('changePhotoButton').addEventListener('click', () => {
-      alert('Change profile photo functionality goes here');
-      // You can add functionality to upload a new photo
+      document.getElementById('fileInput').click(); // Trigger file input when the change button is clicked
     });
 
     // Remove Profile Photo
     document.getElementById('removePhotoButton').addEventListener('click', () => {
-      alert('Remove profile photo functionality goes here');
-      // You can add functionality to remove the photo
+      document.getElementById('profilePhoto').src = 'default-profile.jpg'; // Set to default image
+    });
+
+    // Handle file input for changing profile photo
+    document.getElementById('fileInput').addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+          document.getElementById('profilePhoto').src = event.target.result; // Set the new image as profile photo
+        };
+        reader.readAsDataURL(file);
+      }
     });
   </script>
 
