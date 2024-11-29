@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <title>Create Vendor</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+      background: #f5f5f5 url('bg.png') no-repeat center center fixed;
+      background-size: cover;
+    }
+    header {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    header img {
+      height: 40px;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+    .container {
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    .form-group button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .form-group button:hover {
+      background-color: #0056b3;
+    }
+    .form-group a {
+      text-decoration: none;
+      color: #007bff;
+    }
+    footer {
+      text-align: center;
+      padding: 10px;
+      background-color: #007bff;
+      color: white;
+      position: absolute;
+      width: 100%;
+      bottom: 0;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <img src="logo.png" alt="BBG Logo">
+      <h1>Create Vendor</h1>
+    </div>
+    <a href="admin_login.html" style="color: white; text-decoration: none;">Logout</a>
+  </header>
+
+  <div class="container">
+    <h2>Add New Vendor</h2>
+
+    <!-- Vendor Create Form -->
+    <form id="createVendorForm" action="#" method="POST">
+      <div class="form-group">
+        <label for="vendorName">Vendor Name</label>
+        <input type="text" id="vendorName" name="vendorName" placeholder="Enter Vendor Name" required>
+      </div>
+
+      <div class="form-group">
+        <label for="contact">Contact</label>
+        <input type="text" id="contact" name="contact" placeholder="Enter Contact Number" required>
+      </div>
+
+      <div class="form-group">
+        <label for="address">Address</label>
+        <input type="text" id="address" name="address" placeholder="Enter Vendor Address" required>
+      </div>
+
+      <div class="form-group">
+        <button type="submit">Save Vendor</button>
+      </div>
+
+      <div class="form-group">
+        <button type="button" onclick="window.location.href='vendors.html'">Cancel</button>
+      </div>
+    </form>
+  </div>
+
+  <footer>
+    <p>BBG - Vendor Management System</p>
+  </footer>
+
+  <script>
+    // Example JavaScript to handle form submission
+    document.getElementById('createVendorForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      // Normally here you would send the form data to the server
+      alert('Vendor added successfully!');
+      window.location.href = 'vendors.html'; // Redirect to vendors page after saving
+    });
+  </script>
+</body>
+</html>
