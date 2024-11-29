@@ -22,16 +22,20 @@
       border-radius: 8px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
-    h1 {
-      text-align: center;
-      color: #007bff;
-    }
-    .top-bar {
+    .header {
       display: flex;
-      justify-content: flex-end;
+      justify-content: space-between;
+      align-items: center;
       margin-bottom: 20px;
     }
-    .top-bar button {
+    .header img {
+      height: 50px;
+    }
+    .header-buttons {
+      display: flex;
+      gap: 10px;
+    }
+    .header-buttons button {
       background: #007bff;
       color: white;
       padding: 10px 15px;
@@ -39,8 +43,12 @@
       border-radius: 5px;
       cursor: pointer;
     }
-    .top-bar button:hover {
+    .header-buttons button:hover {
       background: #0056b3;
+    }
+    h1 {
+      text-align: center;
+      color: #007bff;
     }
     #invoiceForm {
       display: none;
@@ -92,10 +100,16 @@
 </head>
 <body>
   <div class="container">
-    <h1>Invoice Register</h1>
-    <div class="top-bar">
-      <button id="showFormButton">Submit Invoice</button>
+    <!-- Header with Logo and Buttons -->
+    <div class="header">
+      <img src="company-logo.png" alt="Company Logo">
+      <div class="header-buttons">
+        <button id="logoutButton">Logout</button>
+        <button id="showFormButton">Submit Invoice</button>
+      </div>
     </div>
+
+    <h1>Invoice Register</h1>
 
     <!-- Form to Submit New Invoices -->
     <form id="invoiceForm">
@@ -178,6 +192,12 @@
         invoiceForm.style.display = 'none';
         showFormButton.textContent = 'Submit Invoice';
       }
+    });
+
+    // Handle Logout
+    document.getElementById('logoutButton').addEventListener('click', () => {
+      alert('Logging out...');
+      window.location.href = 'login.html'; // Redirect to login page
     });
 
     // Handle Invoice Submission
