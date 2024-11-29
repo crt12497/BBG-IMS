@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Profile</title>
+  <link rel="icon" type="image/x-icon" href="logo.png">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: url('bg.png') no-repeat center center fixed;
+      background-size: cover;
+      color: #333;
+    }
+    .container {
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .header img {
+      height: 50px;
+    }
+    .header-buttons {
+      display: flex;
+      gap: 10px;
+    }
+    .header-buttons button {
+      background: #007bff;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .header-buttons button:hover {
+      background: #0056b3;
+    }
+    h1 {
+      text-align: center;
+      color: #007bff;
+    }
+    .profile-photo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .profile-photo img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 10px;
+    }
+    .profile-photo button {
+      margin-top: 10px;
+      background-color: #ff5c5c;
+    }
+    .profile-info {
+      margin-bottom: 20px;
+    }
+    .profile-info label {
+      font-weight: bold;
+    }
+    .profile-info div {
+      margin: 5px 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    table th, table td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: left;
+    }
+    table th {
+      background: #007bff;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <img src="logo.png" alt="BBG">
+      <div class="header-buttons">
+        <button id="logoutButton">Logout</button>
+        <button id="invoicesButton">Invoices</button>
+      </div>
+    </div>
+
+    <h1>User Profile</h1>
+
+    <!-- Profile Photo Section -->
+    <div class="profile-photo">
+      <img src="default-profile.jpg" alt="Profile Photo" id="profilePhoto">
+      <button id="changePhotoButton">Change Photo</button>
+      <button id="removePhotoButton">Remove Photo</button>
+    </div>
+
+    <!-- Profile Information -->
+    <div class="profile-info">
+      <div>
+        <label for="employeeName">Employee Name:</label>
+        <div id="employeeName">John Doe</div>
+      </div>
+      <div>
+        <label for="employeeId">Employee ID:</label>
+        <div id="employeeId">EMP12345</div>
+      </div>
+      <div>
+        <label for="department">Department:</label>
+        <div id="department">Accounts</div>
+      </div>
+      <div>
+        <label for="role">Role:</label>
+        <div id="role">Accounts Manager</div>
+      </div>
+    </div>
+
+    <!-- Table of Invoices (optional placeholder for now) -->
+    <table id="invoiceTable">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Vendor Name</th>
+          <th>Invoice No</th>
+          <th>Invoice Date</th>
+          <th>Description</th>
+          <th>Total Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>Ravi Teja</td>
+          <td>INV0001220</td>
+          <td>2024-11-14</td>
+          <td>Invoice Description</td>
+          <td>1000</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+  <script>
+    // Logout functionality
+    document.getElementById('logoutButton').addEventListener('click', () => {
+      window.location.href = 'user_login.html';
+    });
+
+    // Invoices Button functionality
+    document.getElementById('invoicesButton').addEventListener('click', () => {
+      window.location.href = 'invoice_management.html'; // Redirect to invoice management page
+    });
+
+    // Change Profile Photo
+    document.getElementById('changePhotoButton').addEventListener('click', () => {
+      alert('Change profile photo functionality goes here');
+      // You can add functionality to upload a new photo
+    });
+
+    // Remove Profile Photo
+    document.getElementById('removePhotoButton').addEventListener('click', () => {
+      alert('Remove profile photo functionality goes here');
+      // You can add functionality to remove the photo
+    });
+  </script>
+
+</body>
+</html>
