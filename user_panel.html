@@ -26,7 +26,24 @@
       text-align: center;
       color: #007bff;
     }
-    form {
+    .top-bar {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+    .top-bar button {
+      background: #007bff;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .top-bar button:hover {
+      background: #0056b3;
+    }
+    #invoiceForm {
+      display: none;
       margin-bottom: 20px;
     }
     form label {
@@ -76,7 +93,10 @@
 <body>
   <div class="container">
     <h1>Invoice Register</h1>
-    
+    <div class="top-bar">
+      <button id="showFormButton">Submit Invoice</button>
+    </div>
+
     <!-- Form to Submit New Invoices -->
     <form id="invoiceForm">
       <label for="vendorName">Vendor Name</label>
@@ -127,7 +147,17 @@
         </tr>
       </thead>
       <tbody>
-        <!-- Dynamically populated rows will go here -->
+        <!-- Sample data -->
+        <tr>
+          <td>ABC Pvt Ltd</td>
+          <td>INV123</td>
+          <td>2024-11-15</td>
+          <td>Office Supplies</td>
+          <td>5000</td>
+          <td>2024-11-16</td>
+          <td>Accounts User 1</td>
+          <td>Urgent</td>
+        </tr>
       </tbody>
     </table>
   </div>
@@ -135,6 +165,20 @@
   <script>
     // Pre-fill Submitted Date with Current Date
     document.getElementById('submittedDate').value = new Date().toISOString().slice(0, 10);
+
+    // Toggle the visibility of the form
+    const showFormButton = document.getElementById('showFormButton');
+    const invoiceForm = document.getElementById('invoiceForm');
+
+    showFormButton.addEventListener('click', () => {
+      if (invoiceForm.style.display === 'none' || invoiceForm.style.display === '') {
+        invoiceForm.style.display = 'block';
+        showFormButton.textContent = 'Hide Form';
+      } else {
+        invoiceForm.style.display = 'none';
+        showFormButton.textContent = 'Submit Invoice';
+      }
+    });
 
     // Handle Invoice Submission
     document.getElementById('invoiceForm').addEventListener('submit', function(e) {
@@ -160,9 +204,11 @@
         cell.textContent = value;
       });
 
-      // Reset the form
+      // Reset the form and hide it
       document.getElementById('invoiceForm').reset();
       document.getElementById('submittedDate').value = new Date().toISOString().slice(0, 10);
+      invoiceForm.style.display = 'none';
+      showFormButton.textContent = 'Submit Invoice';
     });
   </script>
 </body>
