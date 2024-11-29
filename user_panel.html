@@ -75,14 +75,14 @@
 </head>
 <body>
   <div class="container">
-    <h1>User Invoice Management</h1>
+    <h1>Invoice Register</h1>
     
     <!-- Form to Submit New Invoices -->
     <form id="invoiceForm">
-      <label for="vendorName">Vendor Name (Alpha-Numeric)</label>
+      <label for="vendorName">Vendor Name</label>
       <input type="text" id="vendorName" name="vendorName" placeholder="Enter Vendor Name" required>
 
-      <label for="invoiceNo">Invoice No (Alpha-Numeric)</label>
+      <label for="invoiceNo">Invoice No</label>
       <input type="text" id="invoiceNo" name="invoiceNo" placeholder="Enter Invoice No" required>
 
       <label for="invoiceDate">Invoice Date</label>
@@ -108,7 +108,7 @@
       <label for="remarks">Remarks</label>
       <textarea id="remarks" name="remarks" rows="3" placeholder="Enter Remarks (Optional)"></textarea>
 
-      <input type="submit" value="Submit Invoice">
+      <input type="submit" id="submit" value="Submit Invoice">
     </form>
 
     <!-- Table to View Submitted Invoices -->
