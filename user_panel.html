@@ -237,26 +237,42 @@
         uploadedFile: document.getElementById('uploadedFile').files[0]
       };
 
-      // Add data to the table
-     const table = document.getElementById('invoiceTable').getElementsByTagName('tbody')[0];
-     const newRow = table.insertRow();
+// Add data to the table
+const table = document.getElementById('invoiceTable').getElementsByTagName('tbody')[0];
+const newRow = table.insertRow();
 
-      Object.keys(formData).forEach((key) => {
-      const cell = newRow.insertCell();
-      if (key === 'uploadedFile') {
-        if (formData.uploadedFile) {
-            const link = document.createElement('a');
-            link.href = URL.createObjectURL(formData.uploadedFile);
-            link.textContent = formData.uploadedFile.name;
-            link.target = '_blank';
-            cell.appendChild(link);
-            } else {
-                cell.textContent = 'No file';
-                }
-          } else {
-                cell.textContent = formData[key];
-            }
-        });
+Object.keys(formData).forEach((key) => {
+  const cell = newRow.insertCell();
+  
+  if (key === 'uploadedFile') {
+    if (formData.uploadedFile) {
+      const fileType = formData.uploadedFile.type;
+      if (fileType.startsWith('image/')) {
+        // Display thumbnail for image files
+        const img = document.createElement('img');
+        img.src = URL.createObjectURL(formData.uploadedFile);
+        img.alt = formData.uploadedFile.name;
+        img.style.width = '50px';
+        img.style.height = '50px';
+        img.style.objectFit = 'cover';
+        cell.appendChild(img);
+      } else {
+        // Create a link for non-image files
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(formData.uploadedFile);
+        link.textContent = formData.uploadedFile.name;
+        link.target = '_blank';
+        cell.appendChild(link);
+      }
+    } else {
+      cell.textContent = 'No file';
+    }
+  } else {
+    cell.textContent = formData[key];
+  }
+});
+
+
       // Reset the form
       document.getElementById('invoiceForm').reset();
       document.getElementById('submittedDate').value = new Date().toISOString().slice(0, 10);
