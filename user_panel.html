@@ -6,7 +6,7 @@
   <title>Invoice Management</title>
   <link rel="icon" type="image/x-icon" href="images/logo.png">
   <style>
-     body {
+    body {
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
@@ -51,7 +51,7 @@
       color: #007bff;
     }
     #invoiceForm {
-      display: none; /* Hide the form initially */
+      display: none;
       margin-bottom: 20px;
     }
     form label {
@@ -78,13 +78,13 @@
     }
     form input[type="button"] {
       width: auto;
-      background: #f44336; /* Red color for cancel */
+      background: #f44336;
       color: white;
       border: none;
       cursor: pointer;
     }
     form input[type="button"]:hover {
-      background: #d32f2f; /* Darker red for hover */
+      background: #d32f2f;
     }
     table {
       width: 100%;
@@ -110,11 +110,15 @@
     table tr:hover {
       background: #ddd;
     }
+    img.thumbnail {
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <!-- Header -->
     <div class="header">
       <img src="images/logo.png" alt="BBG">
       <div class="header-buttons">
@@ -126,55 +130,39 @@
 
     <h1>Invoice Management</h1>
 
-    <!-- Form to Submit New Invoices -->
     <form id="invoiceForm" enctype="multipart/form-data">
+      <!-- Form fields -->
       <label for="companyName">Company Name</label>
       <select id="companyName" name="companyName" required>
         <option value="" disabled selected>Select Company</option>
         <option value="company1">Company 1</option>
         <option value="company2">Company 2</option>
-        <option value="company3">Company 3</option>
-        <option value="company4">Company 4</option>
       </select>
-
       <label for="vendorName">Vendor Name</label>
-      <input type="text" id="vendorName" name="vendorName" placeholder="Enter Vendor Name" required>
-
+      <input type="text" id="vendorName" required>
       <label for="invoiceNo">Invoice No</label>
-      <input type="text" id="invoiceNo" name="invoiceNo" placeholder="Enter Invoice No" required>
-
+      <input type="text" id="invoiceNo" required>
       <label for="invoiceDate">Invoice Date</label>
-      <input type="date" id="invoiceDate" name="invoiceDate" required>
-
+      <input type="date" id="invoiceDate" required>
       <label for="description">Description</label>
-      <textarea id="description" name="description" rows="4" placeholder="Enter Description" required></textarea>
-
+      <textarea id="description" rows="4" required></textarea>
       <label for="invoiceTotal">Invoice Total Amount</label>
-      <input type="number" id="invoiceTotal" name="invoiceTotal" placeholder="Enter Total Amount" required>
-
+      <input type="number" id="invoiceTotal" required>
       <label for="submittedDate">Submitted Date</label>
-      <input type="date" id="submittedDate" name="submittedDate" value="" required>
-
+      <input type="date" id="submittedDate" required>
       <label for="submittedTo">Submitted To</label>
-      <select id="submittedTo" name="submittedTo" required>
-        <option value="" disabled selected>Select Accounts User</option>
-        <option value="user1">Accounts User 1</option>
-        <option value="user2">Accounts User 2</option>
-        <option value="user3">Accounts User 3</option>
+      <select id="submittedTo" required>
+        <option value="" disabled selected>Select User</option>
+        <option value="user1">User 1</option>
       </select>
-
       <label for="remarks">Remarks</label>
-      <textarea id="remarks" name="remarks" rows="3" placeholder="Enter Remarks (Optional)"></textarea>
-
-      <!-- New field for file upload -->
+      <textarea id="remarks" rows="3"></textarea>
       <label for="invoiceDocument">Invoice Document</label>
-      <input type="file" id="invoiceDocument" name="invoiceDocument" accept=".pdf,.doc,.docx,.jpg,.png" required>
-
-      <input type="submit" id="submit" value="Submit Invoice">
+      <input type="file" id="invoiceDocument" accept=".pdf,.doc,.jpg,.png" required>
+      <input type="submit" value="Submit Invoice">
       <input type="button" id="cancel" value="Cancel">
     </form>
 
-    <!-- Table -->
     <table id="invoiceTable">
       <thead>
         <tr>
@@ -193,32 +181,23 @@
           <th>Payment Completed Date</th>
         </tr>
       </thead>
-      <tbody>
-        <!-- Dynamically populated rows -->
-      </tbody>
+      <tbody></tbody>
     </table>
   </div>
 
   <script>
-    document.getElementById('profileButton').addEventListener('click', () => {
-      window.location.href = 'user_profile.html';
-    });
-
-    // Initialize variables
     let invoiceIdCounter = 1;
 
-    // Pre-fill Submitted Date with Current Date
-    document.getElementById('submittedDate').value = new Date().toISOString().slice(0, 10);
-
-    // Handle the visibility of the form
     document.getElementById('showFormButton').addEventListener('click', () => {
       const form = document.getElementById('invoiceForm');
       form.style.display = form.style.display === 'block' ? 'none' : 'block';
     });
 
-    // Handle Invoice Submission
     document.getElementById('invoiceForm').addEventListener('submit', (e) => {
       e.preventDefault();
+      const fileInput = document.getElementById('invoiceDocument');
+      const file = fileInput.files[0];
+      const fileURL = file ? URL.createObjectURL(file) : '';
 
       const formData = {
         id: invoiceIdCounter++,
@@ -233,32 +212,52 @@
         remarks: document.getElementById('remarks').value,
         paymentStatus: 'Pending',
         paymentCompletedDate: '',
-        invoiceDocument: document.getElementById('invoiceDocument').files[0]?.name || 'No file uploaded'
+        invoiceDocument: file ? file.name : 'No file uploaded',
+        invoiceDocumentURL: fileURL
       };
 
-      const table = document.getElementById('invoiceTable').getElementsByTagName('tbody')[0];
+      const table = document.getElementById('invoiceTable').querySelector('tbody');
       const newRow = table.insertRow();
-      Object.values(formData).forEach(value => {
+
+      Object.entries(formData).forEach(([key, value]) => {
         const cell = newRow.insertCell();
-        cell.textContent = value;
+
+        if (key === 'invoiceDocumentURL') return;
+        if (key === 'invoiceDocument' && fileURL) {
+          if (file.type.startsWith('image/')) {
+            const img = document.createElement('img');
+            img.src = fileURL;
+            img.className = 'thumbnail';
+            img.onclick = () => window.open(fileURL, '_blank');
+            cell.appendChild(img);
+          } else {
+            const link = document.createElement('a');
+            link.href = fileURL;
+            link.textContent = value;
+            link.download = value;
+            cell.appendChild(link);
+          }
+        } else {
+          cell.textContent = value;
+        }
       });
 
       document.getElementById('invoiceForm').reset();
-      document.getElementById('submittedDate').value = new Date().toISOString().slice(0, 10);
       document.getElementById('invoiceForm').style.display = 'none';
     });
 
-    // Cancel functionality
     document.getElementById('cancel').addEventListener('click', () => {
       document.getElementById('invoiceForm').reset();
-      document.getElementById('submittedDate').value = new Date().toISOString().slice(0, 10);
       document.getElementById('invoiceForm').style.display = 'none';
     });
 
-    // Handle Logout
     document.getElementById('logoutButton').addEventListener('click', () => {
-      window.location.href = 'user_login.html';
       alert('Logged out');
+      window.location.href = 'login.html';
+    });
+
+    document.getElementById('profileButton').addEventListener('click', () => {
+      alert('Navigating to profile page');
     });
   </script>
 </body>
