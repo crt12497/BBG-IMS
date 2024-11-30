@@ -127,7 +127,7 @@
     <h1>Invoice Management</h1>
 
     <!-- Form to Submit New Invoices -->
-    <form id="invoiceForm" enctype="multipart/form-data">
+    <form id="invoiceForm">
       <label for="companyName">Company Name</label>
       <select id="companyName" name="companyName" required>
         <option value="" disabled selected>Select Company</option>
@@ -166,9 +166,6 @@
       <label for="remarks">Remarks</label>
       <textarea id="remarks" name="remarks" rows="3" placeholder="Enter Remarks (Optional)"></textarea>
 
-      <!-- New field for file upload -->
-      <label for="invoiceDocument">Invoice Document</label>
-      <input type="file" id="invoiceDocument" name="invoiceDocument" accept=".pdf,.doc,.docx,.jpg,.png" required>
       <input type="submit" id="submit" value="Submit Invoice">
       <input type="button" id="cancel" value="Cancel">
     </form>
@@ -187,10 +184,8 @@
           <th>Submitted Date</th>
           <th>Submitted To</th>
           <th>Remarks</th>
-          <th>Invoice Document</th>
           <th>Payment Status</th>
           <th>Payment Completed Date</th>
-		  <th>Invoice Document</th>
         </tr>
       </thead>
       <tbody>
@@ -200,6 +195,7 @@
   </div>
 
   <script>
+
     document.getElementById('profileButton').addEventListener('click', () => {
     // Redirect to the user panel page (Profile Page)
     window.location.href = 'user_profile.html';
@@ -234,9 +230,6 @@
         remarks: document.getElementById('remarks').value,
         paymentStatus: 'Pending', // Default payment status
         paymentCompletedDate: '' // Default payment completed date
-        paymentStatus: 'Pending',
-        paymentCompletedDate: '',
-        invoiceDocument: document.getElementById('invoiceDocument').files[0]?.name || 'No file uploaded'
       };
 
       // Add data to the table
@@ -250,6 +243,7 @@
       // Reset the form
       document.getElementById('invoiceForm').reset();
       document.getElementById('submittedDate').value = new Date().toISOString().slice(0, 10);
+
       // Hide the form
       document.getElementById('invoiceForm').style.display = 'none';
     });
