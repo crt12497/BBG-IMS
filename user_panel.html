@@ -240,10 +240,7 @@
       // Add data to the table
       const table = document.getElementById('invoiceTable').getElementsByTagName('tbody')[0];
       const newRow = table.insertRow();
-      Object.values(formData).forEach(value => {
-        const cell = newRow.insertCell();
-        cell.textContent = value;
-      });
+
 
     Object.keys(formData).forEach((key) => {
     const cell = newRow.insertCell();
