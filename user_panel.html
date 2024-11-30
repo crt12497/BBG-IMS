@@ -166,6 +166,9 @@
       <label for="remarks">Remarks</label>
       <textarea id="remarks" name="remarks" rows="3" placeholder="Enter Remarks (Optional)"></textarea>
 
+       <label for="uploadedFile">Upload Invoice File</label>
+      <input type="file" id="uploadedFile" name="uploadedFile" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" required>
+
       <input type="submit" id="submit" value="Submit Invoice">
       <input type="button" id="cancel" value="Cancel">
     </form>
@@ -184,6 +187,7 @@
           <th>Submitted Date</th>
           <th>Submitted To</th>
           <th>Remarks</th>
+          <th>Uploaded File</th>
           <th>Payment Status</th>
           <th>Payment Completed Date</th>
         </tr>
@@ -229,7 +233,8 @@
         submittedTo: document.getElementById('submittedTo').value,
         remarks: document.getElementById('remarks').value,
         paymentStatus: 'Pending', // Default payment status
-        paymentCompletedDate: '' // Default payment completed date
+        paymentCompletedDate: '', // Default payment completed date
+        uploadedFile: document.getElementById('uploadedFile').files[0]
       };
 
       // Add data to the table
@@ -239,6 +244,23 @@
         const cell = newRow.insertCell();
         cell.textContent = value;
       });
+
+    Object.keys(formData).forEach((key) => {
+    const cell = newRow.insertCell();
+    if (key === 'uploadedFile') {
+      if (formData.uploadedFile) {
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(formData.uploadedFile);
+        link.textContent = formData.uploadedFile.name;
+        link.target = '_blank';
+        cell.appendChild(link);
+      } else {
+        cell.textContent = 'No file';
+      }
+    } else {
+      cell.textContent = formData[key];
+    }
+  });
 
       // Reset the form
       document.getElementById('invoiceForm').reset();
