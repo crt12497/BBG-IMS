@@ -137,26 +137,38 @@
         <option value="" disabled selected>Select Company</option>
         <option value="company1">Company 1</option>
         <option value="company2">Company 2</option>
+        <option value="company3">Company 3</option>
+        <option value="company4">Company 4</option>
       </select>
       <label for="vendorName">Vendor Name</label>
-      <input type="text" id="vendorName" required>
+      <input type="text" id="vendorName" name="vendorName" placeholder="Enter Vendor Name" required>
+
       <label for="invoiceNo">Invoice No</label>
-      <input type="text" id="invoiceNo" required>
+      <input type="text" id="invoiceNo" name="invoiceNo" placeholder="Enter Invoice No" required>
+
       <label for="invoiceDate">Invoice Date</label>
-      <input type="date" id="invoiceDate" required>
+      <input type="date" id="invoiceDate" name="invoiceDate" required>
+
       <label for="description">Description</label>
-      <textarea id="description" rows="4" required></textarea>
+      <textarea id="description" name="description" rows="4" placeholder="Enter Description" required></textarea>
+
       <label for="invoiceTotal">Invoice Total Amount</label>
-      <input type="number" id="invoiceTotal" required>
+      <input type="number" id="invoiceTotal" name="invoiceTotal" placeholder="Enter Total Amount" required>
+
       <label for="submittedDate">Submitted Date</label>
-      <input type="date" id="submittedDate" required>
+      <input type="date" id="submittedDate" name="submittedDate" value="" required>
+
       <label for="submittedTo">Submitted To</label>
-      <select id="submittedTo" required>
-        <option value="" disabled selected>Select User</option>
-        <option value="user1">User 1</option>
+      <select id="submittedTo" name="submittedTo" required>
+        <option value="" disabled selected>Select Accounts User</option>
+        <option value="user1">Accounts User 1</option>
+        <option value="user2">Accounts User 2</option>
+        <option value="user3">Accounts User 3</option>
       </select>
+
       <label for="remarks">Remarks</label>
-      <textarea id="remarks" rows="3"></textarea>
+      <textarea id="remarks" name="remarks" rows="3" placeholder="Enter Remarks (Optional)"></textarea>
+
       <label for="invoiceDocument">Invoice Document</label>
       <input type="file" id="invoiceDocument" accept=".pdf,.doc,.jpg,.png" required>
       <input type="submit" value="Submit Invoice">
@@ -179,14 +191,21 @@
           <th>Invoice Document</th>
           <th>Payment Status</th>
           <th>Payment Completed Date</th>
+		  <th>Invoice Doument</th>
         </tr>
       </thead>
-      <tbody></tbody>
+     <tbody>
+        <!-- Dynamically populated rows -->
+      </tbody>
     </table>
   </div>
 
   <script>
     let invoiceIdCounter = 1;
+	
+	document.getElementById('profileButton').addEventListener('click', () => {
+    // Redirect to the user panel page (Profile Page)
+    window.location.href = 'user_profile.html';
 
     document.getElementById('showFormButton').addEventListener('click', () => {
       const form = document.getElementById('invoiceForm');
