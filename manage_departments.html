@@ -28,6 +28,30 @@
       color: #333;
     }
 
+    .navbar {
+      width: 100%;
+      background-color: #007bff;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar a {
+      text-decoration: none;
+      color: white;
+      font-size: 1rem;
+      padding: 10px 20px;
+      background-color: #0056b3;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .navbar a:hover {
+      background-color: #003d80;
+    }
+
     .department-container {
       background: #fff;
       padding: 20px;
@@ -114,10 +138,20 @@
         font-size: 0.8rem;
         padding: 5px;
       }
+
+      .navbar a {
+        font-size: 0.9rem;
+        padding: 8px 15px;
+      }
     }
   </style>
 </head>
 <body>
+  <div class="navbar">
+    <a href="admin_panel.html">Home</a>
+    <a href="admin_login.html">Logout</a>
+  </div>
+
   <h1>Manage Departments</h1>
   <div class="department-container">
     <a href="create_departments.html" class="create">+ Create New Department</a>
@@ -173,4 +207,3 @@
   </script>
 </body>
 </html>
-
