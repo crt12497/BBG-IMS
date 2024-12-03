@@ -3,87 +3,234 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" type="image/x-icon" href="images/favicon.ico">
   <title>Manage Users</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       margin: 0;
+      padding: 0;
+      background: #f5f5f5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
       padding: 20px;
-      background-color: #f9f9f9;
-      background: #f5f5f5 url('images/bg.png') no-repeat center center fixed;
-      background-size: cover;
     }
+
+    .navbar {
+      width: 100%;
+      background-color: #007bff;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar a {
+      text-decoration: none;
+      color: white;
+      font-size: 1rem;
+      padding: 10px 20px;
+      background-color: #0056b3;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .navbar a:hover {
+      background-color: #003d80;
+    }
+
     h1 {
       text-align: center;
-      margin-bottom: 20px;
+      margin: 20px 0;
+      font-size: 2rem;
     }
-    form {
+
+    .user-container {
       background: #fff;
       padding: 20px;
       border-radius: 8px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      max-width: 400px;
-      margin: auto;
+      width: 90%;
+      max-width: 1000px;
     }
-    label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: bold;
-    }
-    input {
+
+    .user-list {
       width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+
+    .user-list th,
+    .user-list td {
+      text-align: left;
       padding: 10px;
-      margin-bottom: 15px;
       border: 1px solid #ccc;
-      border-radius: 5px;
     }
-    button {
-      width: 100%;
-      padding: 10px;
+
+    .user-list th {
       background-color: #007bff;
       color: white;
+    }
+
+    .user-list tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    .user-list tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    .actions button {
+      padding: 5px 10px;
+      margin: 2px;
       border: none;
       border-radius: 5px;
       cursor: pointer;
     }
-    button:hover {
+
+    .actions .edit {
+      background-color: #ffc107;
+      color: white;
+    }
+
+    .actions .edit:hover {
+      background-color: #e0a800;
+    }
+
+    .actions .delete {
+      background-color: #dc3545;
+      color: white;
+    }
+
+    .actions .delete:hover {
+      background-color: #c82333;
+    }
+
+    .actions .create,
+    .actions .export {
+      background-color: #007bff;
+      color: white;
+      margin-bottom: 10px;
+      padding: 10px 20px;
+      display: inline-block;
+      font-size: 1rem;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+
+    .actions .create:hover,
+    .actions .export:hover {
       background-color: #0056b3;
     }
-    .back-link {
-      display: block;
-      text-align: center;
-      margin-top: 20px;
-      color: #007bff;
-      text-decoration: none;
-    }
-    .back-link:hover {
-      text-decoration: underline;
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      .actions button {
+        font-size: 0.8rem;
+        padding: 5px;
+      }
+
+      .navbar a {
+        font-size: 0.9rem;
+        padding: 8px 15px;
+      }
     }
   </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.1/xlsx.full.min.js"></script>
 </head>
 <body>
+  <div class="navbar">
+    <a href="admin_panel.html">Home</a>
+    <a href="admin_login.html">Logout</a>
+  </div>
+
   <h1>Manage Users</h1>
-  <form id="userForm">
-    <label for="username">Username</label>
-    <input type="text" id="username" placeholder="Enter username" required>
-
-    <label for="email">Email</label>
-    <input type="email" id="email" placeholder="Enter email" required>
-
-    <label for="role">Role</label>
-    <input type="text" id="role" placeholder="Enter role (e.g., Admin, User)" required>
-
-    <button type="submit">Create User</button>
-  </form>
-  <a href="admin_panel.html" class="back-link">Back to Admin Panel</a>
+  <div class="user-container">
+    <div class="actions">
+      <a href="create_user.html" class="create">+ Create New User</a>
+      <button class="export" onclick="exportUsers()">Export to Excel</button>
+    </div>
+    <table class="user-list">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>User ID</th>
+          <th>Role</th>
+          <th>Department</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="userTable">
+        <!-- Rows dynamically populated -->
+      </tbody>
+    </table>
+  </div>
 
   <script>
-    const userForm = document.getElementById('userForm');
-    userForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      alert('User created successfully!');
-    });
+    const users = [
+      { id: 1, name: "John Doe", userId: "U001", role: "Admin", department: "IT" },
+      { id: 2, name: "Jane Smith", userId: "U002", role: "Manager", department: "Finance" }
+    ];
+
+    function renderUserTable() {
+      const tableBody = document.getElementById('userTable');
+      tableBody.innerHTML = '';
+      users.forEach((user, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${index + 1}</td>
+          <td>${user.name}</td>
+          <td>${user.userId}</td>
+          <td>${user.role}</td>
+          <td>${user.department}</td>
+          <td class="actions">
+            <button class="edit" onclick="editUser(${user.id})">Edit</button>
+            <button class="delete" onclick="deleteUser(${user.id})">Delete</button>
+          </td>
+        `;
+        tableBody.appendChild(row);
+      });
+    }
+
+    function deleteUser(userId) {
+      const confirmation = confirm(`Are you sure you want to delete user with ID: ${userId}?`);
+      if (confirmation) {
+        const userIndex = users.findIndex(user => user.id === userId);
+        if (userIndex > -1) {
+          users.splice(userIndex, 1);
+          alert(`User with ID ${userId} has been deleted.`);
+          renderUserTable();
+        } else {
+          alert('User not found!');
+        }
+      }
+    }
+
+    function editUser(userId) {
+      window.location.href = `edit_user.html?id=${userId}`;
+    }
+
+    function exportUsers() {
+      const worksheet = XLSX.utils.json_to_sheet(users.map(user => ({
+        "ID": user.id,
+        "Name": user.name,
+        "User ID": user.userId,
+        "Role": user.role,
+        "Department": user.department
+      })));
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, 'Users');
+      XLSX.writeFile(workbook, 'User_List.xlsx');
+    }
+
+    document.addEventListener('DOMContentLoaded', renderUserTable);
   </script>
 </body>
 </html>
