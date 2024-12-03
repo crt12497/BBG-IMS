@@ -1,1 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+  <title>Departments Management</title>
+  <style>
+    /* Base Styles */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f5f5f5 url('images/bg.png') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 2rem;
+      color: #333;
+    }
+
+    .department-container {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      width: 90%;
+      max-width: 800px;
+    }
+
+    .department-list {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+
+    .department-list th,
+    .department-list td {
+      text-align: left;
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+
+    .department-list th {
+      background-color: #007bff;
+      color: white;
+    }
+
+    .department-list tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    .department-list tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    .actions button {
+      padding: 5px 10px;
+      margin: 2px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .actions .edit {
+      background-color: #ffc107;
+      color: white;
+    }
+
+    .actions .edit:hover {
+      background-color: #e0a800;
+    }
+
+    .actions .delete {
+      background-color: #dc3545;
+      color: white;
+    }
+
+    .actions .delete:hover {
+      background-color: #c82333;
+    }
+
+    .actions .create {
+      background-color: #007bff;
+      color: white;
+      margin-bottom: 10px;
+      padding: 10px 20px;
+      display: inline-block;
+      font-size: 1rem;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+
+    .actions .create:hover {
+      background-color: #0056b3;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.5rem;
+      }
+
+      .actions button {
+        font-size: 0.8rem;
+        padding: 5px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Manage Departments</h1>
+  <div class="department-container">
+    <a href="create_departments.html" class="create">+ Create New Department</a>
+    <table class="department-list">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Department Name</th>
+          <th>Description</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="departmentTable">
+        <!-- Sample department rows -->
+        <tr>
+          <td>1</td>
+          <td>Human Resources</td>
+          <td>Manages HR-related operations</td>
+          <td class="actions">
+            <button class="edit" onclick="editDepartment(1)">Edit</button>
+            <button class="delete" onclick="deleteDepartment(1)">Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Finance</td>
+          <td>Handles company finances</td>
+          <td class="actions">
+            <button class="edit" onclick="editDepartment(2)">Edit</button>
+            <button class="delete" onclick="deleteDepartment(2)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    // Function to edit a department
+    function editDepartment(departmentId) {
+      alert(`Editing department with ID: ${departmentId}`);
+      // Redirect to an edit form or handle inline editing
+      window.location.href = `edit_department.html?id=${departmentId}`;
+    }
+
+    // Function to delete a department
+    function deleteDepartment(departmentId) {
+      const confirmation = confirm(`Are you sure you want to delete department with ID: ${departmentId}?`);
+      if (confirmation) {
+        alert(`Department with ID ${departmentId} has been deleted.`);
+        // Ideally, make an API call to delete the department and refresh the list
+      }
+    }
+  </script>
+</body>
+</html>
 
