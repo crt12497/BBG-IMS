@@ -22,21 +22,34 @@
       align-items: center;
       justify-content: space-between;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      flex-wrap: wrap;
     }
     header img {
       height: 40px;
+      margin-right: 10px;
     }
     header h1 {
       margin: 0;
-      font-size: 24px;
+      font-size: 1.5rem;
+      flex: 1;
+    }
+    header a {
+      color: white;
+      text-decoration: none;
+      font-size: 0.9rem;
+      margin-left: auto;
     }
     .container {
-      max-width: 600px;
+      max-width: 90%;
       margin: 20px auto;
       padding: 20px;
       background: white;
       border-radius: 8px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
     }
     .form-group {
       margin-bottom: 15px;
@@ -50,42 +63,69 @@
       padding: 10px;
       border: 1px solid #ddd;
       border-radius: 5px;
-      font-size: 16px;
+      font-size: 1rem;
     }
     .form-group button {
+      width: 100%;
       background-color: #007bff;
       color: white;
       border: none;
-      padding: 10px 20px;
+      padding: 10px;
       border-radius: 5px;
-      font-size: 16px;
+      font-size: 1rem;
       cursor: pointer;
     }
     .form-group button:hover {
       background-color: #0056b3;
-    }
-    .form-group a {
-      text-decoration: none;
-      color: #007bff;
     }
     footer {
       text-align: center;
       padding: 10px;
       background-color: #007bff;
       color: white;
-      position: absolute;
-      width: 100%;
-      bottom: 0;
+    }
+    /* Responsive Design */
+    @media (min-width: 768px) {
+      header h1 {
+        font-size: 2rem;
+      }
+      .container {
+        max-width: 600px;
+      }
+      .form-group button {
+        width: auto;
+        padding: 10px 20px;
+        font-size: 1.1rem;
+      }
+    }
+    @media (max-width: 480px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      header h1 {
+        text-align: center;
+        width: 100%;
+        margin-bottom: 10px;
+      }
+      header a {
+        width: 100%;
+        text-align: center;
+        margin-top: 10px;
+      }
+      .form-group button {
+        font-size: 0.9rem;
+      }
     }
   </style>
 </head>
 <body>
   <header>
-    <div>
+    <div style="display: flex; align-items: center;">
       <img src="images/logo.png" alt="BBG Logo">
       <h1>Edit Vendor</h1>
     </div>
-    <a href="admin_login.html" style="color: white; text-decoration: none;">Logout</a>
+    <a href="admin_login.html">Logout</a>
   </header>
 
   <div class="container">
@@ -126,9 +166,8 @@
     // Example JavaScript to handle form submission
     document.getElementById('editVendorForm').addEventListener('submit', function(e) {
       e.preventDefault();
-      // Here you would normally send the data to the backend to save the changes
       alert('Vendor details have been updated successfully!');
-      window.location.href = 'vendors.html'; // Redirect to vendors page after saving changes
+      window.location.href = 'vendors.html';
     });
   </script>
 </body>
