@@ -26,6 +26,13 @@
       width: 100%;
       max-width: 400px;
       box-sizing: border-box;
+      text-align: center; /* Center-align content */
+    }
+
+    .logo {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 20px; /* Center and add spacing */
     }
 
     h2 {
@@ -97,11 +104,17 @@
       .forgot-password {
         font-size: 12px;
       }
+
+      .logo {
+        width: 60px;
+        height: 60px; /* Scale down logo for smaller screens */
+      }
     }
   </style>
 </head>
 <body>
   <div class="login-container">
+    <img src="images/head.png" alt="Logo" class="logo">
     <h2>Admin Login</h2>
     <form id="adminLoginForm">
       <label for="adminUsername">Username</label>
