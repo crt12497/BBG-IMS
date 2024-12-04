@@ -88,6 +88,24 @@
       opacity: 0.9;
     }
 
+    .export-btn {
+      display: inline-block;
+      margin: 10px 0;
+      padding: 10px 15px;
+      font-size: 16px;
+      color: white;
+      background-color: #28a745;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+      text-align: center;
+    }
+
+    .export-btn:hover {
+      background-color: #218838;
+    }
+
     footer {
       text-align: center;
       padding: 10px;
@@ -105,13 +123,15 @@
 
   <div class="container">
     <h2>Submitted Invoices</h2>
-    <table>
+    <a class="export-btn" id="exportButton">Export as CSV</a>
+    <table id="invoiceTable">
       <thead>
         <tr>
           <th>Invoice ID</th>
-          <th>Vendor Name</th>
-          <th>Amount</th>
-          <th>Date Submitted</th>
+          <th>Submitted By</th>
+          <th>Remarks</th>
+          <th>Payment Date</th>
+          <th>Paid Amount</th>
           <th>Status</th>
           <th>Actions</th>
         </tr>
@@ -119,10 +139,11 @@
       <tbody>
         <tr>
           <td>INV001</td>
-          <td>Vendor A</td>
-          <td>$1,200</td>
+          <td>John Doe</td>
+          <td>Approved</td>
           <td>2024-12-01</td>
-          <td>Pending</td>
+          <td>$1,200</td>
+          <td>Completed</td>
           <td class="action-buttons">
             <button class="edit-btn">Edit</button>
             <button class="delete-btn">Delete</button>
@@ -130,16 +151,17 @@
         </tr>
         <tr>
           <td>INV002</td>
-          <td>Vendor B</td>
-          <td>$800</td>
+          <td>Jane Smith</td>
+          <td>Pending Approval</td>
           <td>2024-12-02</td>
-          <td>Approved</td>
+          <td>$800</td>
+          <td>Pending</td>
           <td class="action-buttons">
             <button class="edit-btn">Edit</button>
             <button class="delete-btn">Delete</button>
           </td>
         </tr>
-        <!-- More rows as needed -->
+        <!-- Additional rows can be added here -->
       </tbody>
     </table>
   </div>
@@ -147,5 +169,30 @@
   <footer>
     &copy; 2024 BBG Admin Panel
   </footer>
+
+  <script>
+    document.getElementById('exportButton').addEventListener('click', function () {
+      const table = document.getElementById('invoiceTable');
+      let csv = [];
+      const rows = table.querySelectorAll('tr');
+
+      // Iterate through each table row
+      rows.forEach(row => {
+        const cols = row.querySelectorAll('td, th');
+        let rowData = [];
+        cols.forEach(col => rowData.push('"' + col.innerText + '"')); // Add quotes for safety
+        csv.push(rowData.join(',')); // Combine each row with a comma
+      });
+
+      // Create a CSV Blob
+      const csvBlob = new Blob([csv.join('\n')], { type: 'text/csv' });
+
+      // Create a download link
+      const downloadLink = document.createElement('a');
+      downloadLink.href = URL.createObjectURL(csvBlob);
+      downloadLink.download = 'invoices.csv'; // File name
+      downloadLink.click();
+    });
+  </script>
 </body>
 </html>
