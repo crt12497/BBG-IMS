@@ -3,195 +3,173 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" type="image/x-icon" href="images/favicon.ico">
   <title>Manage Invoices</title>
+  <link rel="icon" type="image/x-icon" href="images/logo.png">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      background: #f5f5f5;
+      background: url('images/bg.png') no-repeat center center fixed;
+      background-size: cover;
+      color: #333;
     }
-
-    header {
-      background-color: #007bff;
-      color: white;
-      padding: 10px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    header h1 {
-      font-size: 20px;
-      margin: 0;
-    }
-
-    header a {
-      color: white;
-      text-decoration: none;
-      font-size: 14px;
-    }
-
     .container {
       max-width: 1200px;
       margin: 20px auto;
-      padding: 10px;
-      background: white;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.9);
       border-radius: 8px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
-
-    h2 {
-      text-align: center;
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       margin-bottom: 20px;
     }
-
+    .header img {
+      height: 50px;
+    }
+    .header-buttons {
+      display: flex;
+      gap: 10px;
+    }
+    .header-buttons button {
+      background: #007bff;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .header-buttons button:hover {
+      background: #0056b3;
+    }
+    h1 {
+      text-align: center;
+      color: #007bff;
+    }
     table {
       width: 100%;
       border-collapse: collapse;
-      margin: 20px 0;
-    }
-
-    table th, table td {
-      padding: 12px;
-      text-align: left;
-      border-bottom: 1px solid #ddd;
-    }
-
-    table th {
-      background-color: #007bff;
-      color: white;
-    }
-
-    .action-buttons button {
-      padding: 5px 10px;
-      margin-right: 5px;
-      font-size: 14px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    .action-buttons .edit-btn {
-      background-color: #ffc107;
-      color: white;
-    }
-
-    .action-buttons .delete-btn {
-      background-color: #dc3545;
-      color: white;
-    }
-
-    .action-buttons button:hover {
-      opacity: 0.9;
-    }
-
-    .export-btn {
-      display: inline-block;
-      margin: 10px 0;
-      padding: 10px 15px;
-      font-size: 16px;
-      color: white;
-      background-color: #28a745;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      text-decoration: none;
-      text-align: center;
-    }
-
-    .export-btn:hover {
-      background-color: #218838;
-    }
-
-    footer {
-      text-align: center;
-      padding: 10px;
-      background-color: #007bff;
-      color: white;
       margin-top: 20px;
+    }
+    table th, table td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: left;
+    }
+    table th {
+      background: #007bff;
+      color: white;
+      cursor: pointer;
+    }
+    table th.sortable:hover {
+      background: #0056b3;
+    }
+    table tr:nth-child(even) {
+      background: #f2f2f2;
+    }
+    table tr:hover {
+      background: #ddd;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Manage Invoices</h1>
-    <a href="admin_panel.html">Back to Admin Panel</a>
-  </header>
-
   <div class="container">
-    <h2>Submitted Invoices</h2>
-    <a class="export-btn" id="exportButton">Export as CSV</a>
-    <table id="invoiceTable">
+    <!-- Header -->
+    <div class="header">
+      <img src="images/logo.png" alt="BBG">
+      <div class="header-buttons">
+        <button id="logoutButton">Logout</button>
+        <button id="profileButton">My Profile</button>
+        <button id="exportButton">Export to Excel</button>
+      </div>
+    </div>
+
+    <h1>Manage Invoices</h1>
+
+    <!-- Table -->
+    <table id="manageInvoiceTable">
       <thead>
         <tr>
-          <th>Invoice ID</th>
-          <th>Submitted By</th>
+          <th>ID</th>
+          <th>Company Name</th>
+          <th>Vendor Name</th>
+          <th>Invoice No</th>
+          <th>Invoice Date</th>
+          <th>Description</th>
+          <th>Total Amount</th>
+          <th>Submitted Date</th>
+          <th>Submitted To</th>
           <th>Remarks</th>
-          <th>Payment Date</th>
-          <th>Paid Amount</th>
-          <th>Status</th>
+          <th>Uploaded File</th>
+          <th>Payment Status</th>
+          <th>Payment Completed Date</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
+        <!-- Dynamically populated rows -->
         <tr>
+          <td>1</td>
+          <td>Company 1</td>
+          <td>Vendor A</td>
           <td>INV001</td>
-          <td>John Doe</td>
-          <td>Approved</td>
-          <td>2024-12-01</td>
-          <td>$1,200</td>
-          <td>Completed</td>
-          <td class="action-buttons">
-            <button class="edit-btn">Edit</button>
-            <button class="delete-btn">Delete</button>
-          </td>
-        </tr>
-        <tr>
-          <td>INV002</td>
-          <td>Jane Smith</td>
-          <td>Pending Approval</td>
-          <td>2024-12-02</td>
-          <td>$800</td>
+          <td>2024-11-01</td>
+          <td>Office Supplies</td>
+          <td>5000</td>
+          <td>2024-11-02</td>
+          <td>Accounts User 1</td>
+          <td>Urgent</td>
+          <td><a href="#">Invoice.pdf</a></td>
           <td>Pending</td>
-          <td class="action-buttons">
-            <button class="edit-btn">Edit</button>
-            <button class="delete-btn">Delete</button>
+          <td></td>
+          <td>
+            <button class="editButton">Edit</button>
+            <button class="deleteButton">Delete</button>
           </td>
         </tr>
-        <!-- Additional rows can be added here -->
       </tbody>
     </table>
   </div>
 
-  <footer>
-    &copy; 2024 BBG Admin Panel
-  </footer>
-
   <script>
-    document.getElementById('exportButton').addEventListener('click', function () {
-      const table = document.getElementById('invoiceTable');
-      let csv = [];
-      const rows = table.querySelectorAll('tr');
+    // Redirect to user profile
+    document.getElementById('profileButton').addEventListener('click', () => {
+      window.location.href = 'user_profile.html';
+    });
 
-      // Iterate through each table row
-      rows.forEach(row => {
-        const cols = row.querySelectorAll('td, th');
-        let rowData = [];
-        cols.forEach(col => rowData.push('"' + col.innerText + '"')); // Add quotes for safety
-        csv.push(rowData.join(',')); // Combine each row with a comma
+    // Handle Logout
+    document.getElementById('logoutButton').addEventListener('click', () => {
+      window.location.href = 'user_login.html';
+      alert('Logged out');
+    });
+
+    // Export to Excel
+    document.getElementById('exportButton').addEventListener('click', () => {
+      const table = document.getElementById('manageInvoiceTable');
+      const workbook = XLSX.utils.table_to_book(table, { sheet: "Manage Invoices" });
+      XLSX.writeFile(workbook, "Manage_Invoices.xlsx");
+    });
+
+    // Add event listeners for edit and delete
+    document.querySelectorAll('.editButton').forEach(button => {
+      button.addEventListener('click', (event) => {
+        const row = event.target.closest('tr');
+        alert(`Edit functionality is not implemented yet for ID: ${row.cells[0].textContent}`);
       });
+    });
 
-      // Create a CSV Blob
-      const csvBlob = new Blob([csv.join('\n')], { type: 'text/csv' });
-
-      // Create a download link
-      const downloadLink = document.createElement('a');
-      downloadLink.href = URL.createObjectURL(csvBlob);
-      downloadLink.download = 'invoices.csv'; // File name
-      downloadLink.click();
+    document.querySelectorAll('.deleteButton').forEach(button => {
+      button.addEventListener('click', (event) => {
+        const row = event.target.closest('tr');
+        if (confirm(`Are you sure you want to delete invoice ID: ${row.cells[0].textContent}?`)) {
+          row.remove();
+        }
+      });
     });
   </script>
 </body>
