@@ -16,7 +16,7 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      height: 100vh;
+      min-height: 100vh;
     }
     header {
       background-color: #007bff;
@@ -29,6 +29,7 @@
     }
     header img {
       height: 30px;
+      margin-right: 10px;
     }
     header h1 {
       margin: 0;
@@ -41,7 +42,7 @@
     }
     .container {
       max-width: 1200px;
-      margin: 0 auto;
+      margin: 20px auto;
       padding: 10px;
       background: white;
       border-radius: 8px;
@@ -50,49 +51,55 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      align-items: center;
+      gap: 20px;
     }
     .container h2 {
-      font-size: 18px;
+      font-size: 22px;
       text-align: center;
       width: 100%;
-      margin-bottom: 10px;
+      margin-bottom: 20px;
     }
     .card {
       background-color: #f8f9fa;
-      padding: 10px;
+      padding: 15px;
       border-radius: 8px;
-      margin: 10px;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      width: 150px;
-      height: 100px;
+      width: calc(25% - 20px);
       text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .card img {
+      width: 60px;
+      height: 60px;
+      margin-bottom: 10px;
+      border-radius: 50%;
     }
     .card h3 {
-      margin: 0 0 5px;
-      font-size: 16px;
+      margin: 10px 0;
+      font-size: 18px;
     }
     .card p {
-      font-size: 12px;
-      margin-bottom: 10px;
+      font-size: 14px;
+      margin-bottom: 15px;
     }
     .card button {
       background: #007bff;
       color: white;
       border: none;
-      padding: 8px 10px;
+      padding: 10px 15px;
       border-radius: 5px;
       cursor: pointer;
-      font-size: 12px;
+      font-size: 14px;
     }
     .card button:hover {
       background: #0056b3;
     }
-    .card img {
-      width: 50px;
-      height: 50px;
-      margin-bottom: 10px;
-      border-radius: 50%;
+    .card button a {
+      color: white;
+      text-decoration: none;
     }
     footer {
       text-align: center;
@@ -101,9 +108,33 @@
       color: white;
     }
     /* Responsive Design */
+    @media (max-width: 1024px) {
+      .card {
+        width: calc(33% - 20px);
+      }
+    }
     @media (max-width: 768px) {
       .card {
-        width: 150px;
+        width: calc(50% - 20px);
+      }
+      .card h3 {
+        font-size: 16px;
+      }
+      .card p {
+        font-size: 12px;
+      }
+      .card button {
+        font-size: 12px;
+        padding: 8px 10px;
+      }
+    }
+    @media (max-width: 480px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .card {
+        width: 100%;
       }
       .card h3 {
         font-size: 14px;
@@ -120,7 +151,7 @@
 </head>
 <body>
   <header>
-    <div>
+    <div style="display: flex; align-items: center;">
       <img src="images/logo.png" alt="BBG Logo">
       <h1>BBG Admin Panel</h1>
     </div>
@@ -133,25 +164,25 @@
       <img src="images/manage_users.png" alt="Manage Users">
       <h3>Manage Users</h3>
       <p>Create, update, or delete users for the system.</p>
-      <button><a href="manage_users.html" style="color: white; text-decoration: none;">Go to Users</a></button>
+      <button><a href="manage_users.html">Go to Users</a></button>
     </div>
     <div class="card">
       <img src="images/manage_departments.png" alt="Manage Departments">
       <h3>Manage Departments</h3>
       <p>Add, update, or remove departments in the system.</p>
-      <button><a href="manage_departments.html" style="color: white; text-decoration: none;">Go to Departments</a></button>
+      <button><a href="manage_departments.html">Go to Departments</a></button>
     </div>
     <div class="card">
       <img src="images/manage_roles.png" alt="Manage Roles">
       <h3>Manage Roles</h3>
       <p>Define and update roles for system users.</p>
-      <button><a href="manage_roles.html" style="color: white; text-decoration: none;">Go to Roles</a></button>
+      <button><a href="manage_roles.html">Go to Roles</a></button>
     </div>
     <div class="card">
       <img src="images/manage_vendors.png" alt="Manage Vendors">
       <h3>Manage Vendors</h3>
       <p>Create, update, or delete vendors for the system.</p>
-      <button><a href="manage_vendors.html" style="color: white; text-decoration: none;">Go to Vendors</a></button>
+      <button><a href="manage_vendors.html">Go to Vendors</a></button>
     </div>
   </div>
 
