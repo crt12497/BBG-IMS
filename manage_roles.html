@@ -9,121 +9,206 @@
     body {
       font-family: Arial, sans-serif;
       margin: 0;
-      padding: 20px;
-      background-color: #f9f9f9;
+      padding: 0;
+      background-color: #f5f5f5;
       background: #f5f5f5 url('images/bg.png') no-repeat center center fixed;
       background-size: cover;
     }
-    h1 {
-      text-align: center;
-      margin-bottom: 20px;
-      font-size: 2rem;
+    header {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
-    form {
-      background: #fff;
+    header img {
+      height: 30px;
+    }
+    header a {
+      color: white;
+      text-decoration: none;
+      margin-left: 15px;
+      font-size: 14px;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 20px auto;
       padding: 20px;
+      background: white;
       border-radius: 8px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      max-width: 400px;
-      margin: auto;
-      width: 90%;
     }
-    label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: bold;
-      font-size: 0.9rem;
+    .container h2 {
+      text-align: center;
+      margin-bottom: 20px;
     }
-    input {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      font-size: 1rem;
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
     }
-    button {
-      width: 100%;
-      padding: 10px;
+    .actions button {
       background-color: #007bff;
       color: white;
       border: none;
+      padding: 10px 15px;
       border-radius: 5px;
-      font-size: 1rem;
       cursor: pointer;
     }
-    button:hover {
+    .actions button:hover {
       background-color: #0056b3;
     }
-    .back-link {
-      display: block;
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    table th, table td {
+      border: 1px solid #ddd;
+      padding: 8px;
       text-align: center;
-      margin-top: 20px;
-      font-size: 0.9rem;
-      color: #007bff;
-      text-decoration: none;
     }
-    .back-link:hover {
-      text-decoration: underline;
+    table th {
+      background-color: #007bff;
+      color: white;
     }
-
-    /* Responsive Design */
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 1.5rem;
-      }
-      label {
-        font-size: 0.85rem;
-      }
-      input {
-        font-size: 0.95rem;
-      }
-      button {
-        font-size: 0.9rem;
-        padding: 10px;
-      }
+    table tr:nth-child(even) {
+      background-color: #f2f2f2;
     }
-
-    @media (max-width: 480px) {
-      h1 {
-        font-size: 1.2rem;
-        margin-bottom: 15px;
-      }
-      label {
-        font-size: 0.8rem;
-      }
-      input {
-        font-size: 0.85rem;
-      }
-      button {
-        font-size: 0.85rem;
-        padding: 8px;
-      }
-      .back-link {
-        font-size: 0.85rem;
-      }
+    table tr:hover {
+      background-color: #ddd;
+    }
+    footer {
+      text-align: center;
+      padding: 10px;
+      background-color: #007bff;
+      color: white;
+      position: fixed;
+      width: 100%;
+      bottom: 0;
     }
   </style>
 </head>
 <body>
-  <h1>Manage Roles</h1>
-  <form id="roleForm">
-    <label for="roleName">Role Name</label>
-    <input type="text" id="roleName" placeholder="Enter role name" required>
+  <header>
+    <div>
+      <img src="images/logo.png" alt="BBG Logo">
+    </div>
+    <div>
+      <a href="home.html">Home</a>
+      <a href="admin_login.html">Logout</a>
+    </div>
+  </header>
+  
+  <div class="container">
+    <h2>Manage Roles</h2>
+    <div class="actions">
+      <button onclick="createNewRole()">Create New Role</button>
+      <button onclick="exportRoles()">Export Roles</button>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Role ID</th>
+          <th>Role Name</th>
+          <th>Number of Users</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="roleTable">
+        <!-- Roles will be dynamically generated -->
+      </tbody>
+    </table>
+  </div>
 
-    <label for="roleDescription">Description</label>
-    <input type="text" id="roleDescription" placeholder="Enter role description">
-
-    <button type="submit">Create Role</button>
-  </form>
-  <a href="admin_panel.html" class="back-link">Back to Admin Panel</a>
+  <footer>
+    &copy; 2024 BBG Admin Panel
+  </footer>
 
   <script>
-    const roleForm = document.getElementById('roleForm');
-    roleForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      alert('Role created successfully!');
-    });
+    // Sample roles data
+    const roles = [
+      { id: 1, name: "Administrator", users: 10 },
+      { id: 2, name: "Manager", users: 25 },
+      { id: 3, name: "Employee", users: 100 }
+    ];
+
+    const roleTable = document.getElementById("roleTable");
+
+    // Function to render roles
+    function renderRoles() {
+      roleTable.innerHTML = "";
+      roles.forEach(role => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${role.id}</td>
+          <td>${role.name}</td>
+          <td>${role.users}</td>
+          <td>
+            <button onclick="editRole(${role.id})">Edit Permissions</button>
+            <button onclick="deleteRole(${role.id})">Delete</button>
+          </td>
+        `;
+        roleTable.appendChild(row);
+      });
+    }
+
+    // Function to create a new role
+    function createNewRole() {
+      const roleName = prompt("Enter the new role name:");
+      if (roleName) {
+        const newId = roles.length ? roles[roles.length - 1].id + 1 : 1;
+        roles.push({ id: newId, name: roleName, users: 0 });
+        renderRoles();
+        alert("New role created successfully.");
+      }
+    }
+
+    // Function to export roles
+    function exportRoles() {
+      let csvContent = "data:text/csv;charset=utf-8,Role ID,Role Name,Number of Users\n";
+      roles.forEach(role => {
+        csvContent += `${role.id},${role.name},${role.users}\n`;
+      });
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", "roles.csv");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // Function to edit a role
+    function editRole(roleId) {
+      const role = roles.find(r => r.id === roleId);
+      if (role) {
+        const newName = prompt("Edit role name:", role.name);
+        if (newName) {
+          role.name = newName;
+          renderRoles();
+          alert("Role updated successfully.");
+        }
+      }
+    }
+
+    // Function to delete a role
+    function deleteRole(roleId) {
+      const index = roles.findIndex(r => r.id === roleId);
+      if (index !== -1) {
+        const confirmDelete = confirm(`Are you sure you want to delete the role: ${roles[index].name}?`);
+        if (confirmDelete) {
+          roles.splice(index, 1);
+          renderRoles();
+          alert("Role deleted successfully.");
+        }
+      }
+    }
+
+    // Initial rendering of roles
+    renderRoles();
   </script>
 </body>
 </html>
