@@ -84,7 +84,7 @@
       <img src="images/logo.png" alt="BBG">
       <div class="header-buttons">
         <button id="logoutButton">Logout</button>
-        <button id="profileButton">My Profile</button>
+        <button id="homeButton">Home</button>
         <button id="exportButton">Export to Excel</button>
       </div>
     </div>
@@ -138,8 +138,8 @@
 
   <script>
     // Redirect to user profile
-    document.getElementById('profileButton').addEventListener('click', () => {
-      window.location.href = 'user_profile.html';
+    document.getElementById('homeButton').addEventListener('click', () => {
+      window.location.href = 'admin_panel.html';
     });
 
     // Handle Logout
