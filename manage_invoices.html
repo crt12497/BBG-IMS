@@ -75,6 +75,14 @@
     table tr:hover {
       background: #ddd;
     }
+    .thumbnail {
+      width: 50px;
+      height: 50px;
+      display: inline-block;
+      vertical-align: middle;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
   </style>
 </head>
 <body>
@@ -124,7 +132,12 @@
           <td>2024-11-02</td>
           <td>Accounts User 1</td>
           <td>Urgent</td>
-          <td><a href="#">Invoice.pdf</a></td>
+          <td>
+            <a href="uploads/Invoice.pdf" target="_blank">
+              <img src="images/pdf-icon.png" alt="File Preview" class="thumbnail">
+              View File
+            </a>
+          </td>
           <td>Pending</td>
           <td></td>
           <td>
