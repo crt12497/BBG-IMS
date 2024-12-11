@@ -15,77 +15,134 @@
       background-size: cover;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
       min-height: 100vh;
     }
+
     header {
       background-color: #007bff;
       color: white;
-      padding: 10px;
+      padding: 15px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
+
     header img {
-      height: 30px;
+      height: 40px;
       margin-right: 10px;
     }
+
     header h1 {
       margin: 0;
-      font-size: 15px;
+      font-size: 20px;
     }
+
     header a {
       color: white;
       text-decoration: none;
-      font-size: 14px;
+      font-size: 16px;
+      padding: 5px 10px;
+      background: #0056b3;
+      border-radius: 4px;
     }
-    .container {
-      max-width: 1200px;
-      margin: 20px auto;
-      padding: 10px;
+
+    .sidebar {
+      width: 240px;
+      background-color: #004085;
+      color: white;
+      padding-top: 20px;
+      height: 100vh;
+      position: fixed;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+    }
+
+    .sidebar.open {
+      transform: translateX(0);
+    }
+
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .sidebar ul li {
+      padding: 10px 20px;
+    }
+
+    .sidebar ul li a {
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+      display: block;
+    }
+
+    .sidebar ul li a:hover, .sidebar ul li.active a {
+      background-color: #0056b3;
+      border-radius: 4px;
+    }
+
+    .main-content {
+      margin-left: 0;
+      padding: 20px;
+      flex: 1;
       background: white;
       border-radius: 8px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      flex: 1;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
+      transition: margin-left 0.3s ease;
+    }
+
+    .main-content.shift {
+      margin-left: 240px;
+    }
+
+    .menu-toggle {
+      background: #004085;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+      font-size: 16px;
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      z-index: 1000;
+      border-radius: 4px;
+    }
+
+    .card-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 20px;
     }
-    .container h2 {
-      font-size: 22px;
-      text-align: center;
-      width: 100%;
-      margin-bottom: 20px;
-    }
+
     .card {
       background-color: #f8f9fa;
-      padding: 15px;
+      padding: 20px;
       border-radius: 8px;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      width: 25vw;
-      height: 25vh;
       text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
     }
+
     .card img {
-      width: 20px;
-      height: 20px;
+      width: 40px;
+      height: 40px;
       margin-bottom: 10px;
       border-radius: 50%;
     }
+
     .card h3 {
       margin: 10px 0;
       font-size: 18px;
     }
+
     .card p {
       font-size: 14px;
       margin-bottom: 15px;
     }
+
     .card button {
       background: #007bff;
       color: white;
@@ -95,106 +152,104 @@
       cursor: pointer;
       font-size: 14px;
     }
+
     .card button:hover {
       background: #0056b3;
     }
+
     .card button a {
       color: white;
       text-decoration: none;
     }
+
     footer {
       text-align: center;
       padding: 10px;
       background-color: #007bff;
       color: white;
     }
-    /* Responsive Design */
-    @media (max-width: 1024px) {
-      .card {
-        width: calc(33% - 20px);
-      }
-    }
+
     @media (max-width: 768px) {
-      .card {
-        width: calc(50% - 20px);
+      .sidebar {
+        transform: translateX(-100%);
       }
-      .card h3 {
-        font-size: 16px;
-      }
-      .card p {
-        font-size: 12px;
-      }
-      .card button {
-        font-size: 12px;
-        padding: 8px 10px;
-      }
-    }
-    @media (max-width: 480px) {
-      header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      .card {
-        width: 100%;
-      }
-      .card h3 {
-        font-size: 14px;
-      }
-      .card p {
-        font-size: 10px;
-      }
-      .card button {
-        font-size: 10px;
-        padding: 6px 8px;
+
+      .main-content {
+        margin-left: 0;
       }
     }
   </style>
 </head>
 <body>
   <header>
+    <button class="menu-toggle">☰</button>
     <div style="display: flex; align-items: center;">
       <img src="images/logo.png" alt="BBG Logo">
       <h1>BBG Admin Panel</h1>
     </div>
     <a href="admin_login.html">Logout</a>
   </header>
-  
-  <div class="container" style="display: flex; align-items: center;">
+
+  <div class="sidebar">
+    <ul>
+      <li class="active"><a href="#">Dashboard</a></li>
+      <li><a href="manage_users.html">Manage Users</a></li>
+      <li><a href="manage_departments.html">Manage Departments</a></li>
+      <li><a href="manage_roles.html">Manage Roles</a></li>
+      <li><a href="manage_vendors.html">Manage Vendors</a></li>
+      <li><a href="manage_invoices.html">Manage Invoices</a></li>
+    </ul>
+  </div>
+
+  <div class="main-content">
     <h2>Welcome, Admin</h2>
-    <div class="card">
-      <img src="images/manage_users.png" alt="Manage Users">
-      <h3>Manage Users</h3>
-      <p>Create, update, or delete users for the system.</p>
-      <button><a href="manage_users.html">Users</a></button>
-    </div>
-    <div class="card">
-      <img src="images/manage_departments.png" alt="Manage Departments">
-      <h3>Manage Departments</h3>
-      <p>Add, update, or remove departments in the system.</p>
-      <button><a href="manage_departments.html">Departments</a></button>
-    </div>
-    <div class="card">
-      <img src="images/manage_roles.png" alt="Manage Roles">
-      <h3>Manage Roles</h3>
-      <p>Define and update roles for system users.</p>
-      <button><a href="manage_roles.html">Roles</a></button>
-    </div>
-    <div class="card">
-      <img src="images/manage_vendors.png" alt="Manage Vendors">
-      <h3>Manage Vendors</h3>
-      <p>Create, update, or delete vendors for the system.</p>
-      <button><a href="manage_vendors.html">Vendors</a></button>
-    </div>
-    <div class="card">
-      <img src="images/manage_invoices.png" alt="Manage Invoices">
-      <h3>Manage Invoices</h3>
-      <p>View, update, or delete submitted invoices.</p>
-      <button><a href="manage_invoices.html">Invoices</a></button>
+    <div class="card-container">
+      <div class="card">
+        <img src="images/manage_users.png" alt="Manage Users">
+        <h3>Manage Users</h3>
+        <p>Create, update, or delete users for the system.</p>
+        <button><a href="manage_users.html">Users</a></button>
+      </div>
+      <div class="card">
+        <img src="images/manage_departments.png" alt="Manage Departments">
+        <h3>Manage Departments</h3>
+        <p>Add, update, or remove departments in the system.</p>
+        <button><a href="manage_departments.html">Departments</a></button>
+      </div>
+      <div class="card">
+        <img src="images/manage_roles.png" alt="Manage Roles">
+        <h3>Manage Roles</h3>
+        <p>Define and update roles for system users.</p>
+        <button><a href="manage_roles.html">Roles</a></button>
+      </div>
+      <div class="card">
+        <img src="images/manage_vendors.png" alt="Manage Vendors">
+        <h3>Manage Vendors</h3>
+        <p>Create, update, or delete vendors for the system.</p>
+        <button><a href="manage_vendors.html">Vendors</a></button>
+      </div>
+      <div class="card">
+        <img src="images/manage_invoices.png" alt="Manage Invoices">
+        <h3>Manage Invoices</h3>
+        <p>View, update, or delete submitted invoices.</p>
+        <button><a href="manage_invoices.html">Invoices</a></button>
+      </div>
     </div>
   </div>
 
   <footer>
     &copy; 2024 BBG Admin Panel
   </footer>
+
+  <script>
+    const menuToggle = document.querySelector('.menu-toggle');
+    const sidebar = document.querySelector('.sidebar');
+    const mainContent = document.querySelector('.main-content');
+
+    menuToggle.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+      mainContent.classList.toggle('shift');
+    });
+  </script>
 </body>
 </html>
