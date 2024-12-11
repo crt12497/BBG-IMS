@@ -24,8 +24,23 @@
       padding: 15px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
+      position: relative;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .menu-toggle {
+      background: #004085;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+      font-size: 16px;
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      z-index: 1000;
+      border-radius: 4px;
     }
 
     header img {
@@ -36,6 +51,8 @@
     header h1 {
       margin: 0;
       font-size: 20px;
+      display: flex;
+      align-items: center;
     }
 
     header a {
@@ -45,6 +62,8 @@
       padding: 5px 10px;
       background: #0056b3;
       border-radius: 4px;
+      position: absolute;
+      right: 15px;
     }
 
     .sidebar {
@@ -96,20 +115,6 @@
 
     .main-content.shift {
       margin-left: 240px;
-    }
-
-    .menu-toggle {
-      background: #004085;
-      color: white;
-      border: none;
-      padding: 10px 15px;
-      cursor: pointer;
-      font-size: 16px;
-      position: fixed;
-      top: 15px;
-      left: 15px;
-      z-index: 1000;
-      border-radius: 4px;
     }
 
     .card-container {
